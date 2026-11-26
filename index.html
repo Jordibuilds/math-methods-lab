@@ -1,0 +1,2519 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Solve Mathematical Methods for Business and Economics exercises in an interactive notebook.">
+  <meta name="theme-color" content="#15223b">
+  <title>Math Methods Lab</title>
+  <style>
+@font-face {
+  font-family: Local UI;
+  src: local("Segoe UI Variable"), local("Segoe UI");
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --font: "Local UI", "Inter", system-ui, sans-serif;
+  --math-font: "Cambria Math", "STIX Two Text", "Times New Roman", serif;
+  --ink: #182440;
+  --muted: #586582;
+  --muted-light: #b7c3db;
+  --primary: #5648c5;
+  --primary-dark: #4536b1;
+  --primary-weak: #f1efff;
+  --primary-line: #cfc7fa;
+  --line: #dee3ef;
+  --subtle: #f6f8fd;
+  --card: #fff;
+  --nav: #15223b;
+  --nav-deep: #101b31;
+  --success: #18694e;
+  --success-bg: #eaf8f2;
+  --attention: #86521b;
+  --attention-bg: #fff4e5;
+  --sidebar-width: 273px;
+  font-family: var(--font);
+  color: var(--ink);
+  background: #f4f6fb;
+  font-synthesis: none;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; font-size: 1rem; }
+button, input, textarea, select { font: inherit; }
+button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button { color: inherit; cursor: pointer; }
+button:disabled { cursor: default; opacity: .45; }
+button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid #8070f1;
+  outline-offset: 3px;
+}
+[hidden] { display: none !important; }
+
+.app-shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: auto;
+  background: linear-gradient(180deg, var(--nav) 0%, var(--nav-deep) 100%);
+  color: white;
+  padding: 27px 17px 20px;
+  scrollbar-width: thin;
+  scrollbar-color: #35466c transparent;
+}
+.brand { display: flex; align-items: center; gap: 12px; padding: 3px 7px 26px; }
+.brand-icon { display: grid; place-items: center; width: 42px; height: 42px; flex: none; background: #6658df; border-radius: 13px; box-shadow: 0 5px 14px #0b122d66; }
+.brand-icon svg { width: 25px; height: 25px; }
+.brand-name { font-size: 1.075rem; font-weight: 780; letter-spacing: -.025em; white-space: nowrap; }
+.brand-context { margin: 3px 0 0; color: var(--muted-light); font-size: .79rem; }
+.nav-title { display: block; color: #aab8d4; font-size: .75rem; letter-spacing: .12em; font-weight: 750; text-transform: uppercase; margin: 3px 9px 10px; }
+.chapter-list { display: grid; gap: 2px; }
+.nav-button {
+  display: grid;
+  grid-template-columns: 29px minmax(0, 1fr);
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+  min-height: 40px;
+  border: 1px solid transparent;
+  text-align: left;
+  color: #d8e0f3;
+  padding: 6px 8px;
+  background: transparent;
+  border-radius: 9px;
+  font-size: .867rem;
+  line-height: 1.26;
+}
+.nav-button:hover { background: #243451; color: #fff; }
+.nav-button.is-active { background: #354268; border-color: #6571a657; color: white; font-weight: 650; }
+.nav-number { display: grid; place-items: center; height: 27px; border-radius: 6px; background: #25344f; color: #bec9e0; font-size: .745rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.is-active .nav-number { color: #fff; background: #6558dc; }
+.skill-nav { margin-top: 16px; padding-top: 13px; border-top: 1px solid #2c3a58; }
+.nav-skill-icon { display: grid; place-items: center; width: 29px; height: 27px; border-radius: 7px; background: #2f3454; color: #d5caff; }
+.nav-skill-icon svg { width: 16px; height: 16px; }
+.nav-skill { font-weight: 670; }
+.sidebar-foot { color: #a9b8d4; margin: auto 9px 0; padding-top: 18px; font-size: .78rem; }
+.mobile-nav { display: none; }
+
+.main {
+  width: 100%;
+  max-width: 1580px;
+  margin-inline: auto;
+  padding: 35px clamp(22px, 3.4vw, 53px) 38px;
+}
+
+.chapter-header { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 21px; }
+.eyebrow {
+  margin: 0 0 7px;
+  color: var(--primary-dark);
+  font-size: .775rem;
+  font-weight: 800;
+  letter-spacing: .095em;
+  text-transform: uppercase;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 0; font-size: clamp(1.8rem, 2.85vw, 2.65rem); line-height: 1.13; letter-spacing: -.052em; font-weight: 790; text-wrap: balance; }
+.header-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; flex-shrink: 0; }
+.action {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  min-height: 39px;
+  border: 1px solid var(--line);
+  padding: 7px 11px;
+  border-radius: 9px;
+  color: var(--ink);
+  background: var(--card);
+  font-size: .865rem;
+  line-height: 1.14;
+  font-weight: 680;
+  white-space: nowrap;
+}
+.action svg { width: 16px; height: 16px; flex: none; }
+.action:hover { background: var(--subtle); border-color: #b5bfd7; }
+.action-primary, .action-primary:hover { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 2px 4px #3d287019; }
+.action-primary:hover { background: var(--primary-dark); }
+.action-soft { background: var(--primary-weak); border-color: var(--primary-line); color: var(--primary-dark); }
+.action-soft:hover { background: #e9e4ff; border-color: #aaa0ef; }
+.action-quiet { background: transparent; border-color: transparent; color: var(--muted); box-shadow: none; }
+.action-quiet:hover { background: #f0f2f9; border-color: transparent; }
+.action-small { min-height: 33px; padding: 5px 8px; }
+.icon-button { display: inline-grid; place-items: center; width: 31px; height: 31px; background: transparent; color: var(--muted); border: 1px solid transparent; border-radius: 7px; padding: 0; flex: none; }
+.icon-button svg { width: 16px; height: 16px; }
+.icon-button:hover { background: var(--primary-weak); border-color: var(--primary-line); color: var(--primary-dark); }
+
+.exercise-nav, .skill-categories { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 17px; }
+.skill-categories { gap: 6px; margin-bottom: 11px; }
+.exercise-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  padding: 8px 12px;
+  min-height: 39px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  color: var(--muted);
+  font-size: .885rem;
+  font-weight: 650;
+  text-align: left;
+}
+.chip-index { color: var(--muted); font-size: .78rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+.exercise-chip:hover { border-color: #b5bfd7; color: var(--ink); }
+.exercise-chip.is-active { color: var(--primary-dark); background: var(--primary-weak); border-color: var(--primary-line); }
+.exercise-chip.is-active .chip-index { color: var(--primary-dark); }
+
+.work-grid { display: grid; grid-template-columns: minmax(280px, .82fr) minmax(400px, 1.18fr); gap: 18px; align-items: start; }
+.card { min-width: 0; background: var(--card); border: 1px solid #dce2ef; border-radius: 15px; box-shadow: 0 5px 18px #202c5310; }
+.problem { padding: 22px; }
+.problem-kicker { display: flex; gap: 11px; align-items: center; margin-bottom: 9px; }
+.problem-kicker span:first-child { font-size: .75rem; letter-spacing: .075em; font-weight: 800; text-transform: uppercase; color: var(--primary-dark); }
+.problem-version { border-radius: 999px; background: #edf0f8; color: #505e7c; font-weight: 690; font-size: .725rem; padding: 3px 8px; }
+.problem-version.variant { background: #eeebff; color: var(--primary-dark); }
+.problem h2 { margin: 0 0 9px; font-size: clamp(1.28rem, 2vw, 1.58rem); letter-spacing: -.034em; line-height: 1.23; }
+.problem-description { margin-bottom: 15px; color: #485572; line-height: 1.55; }
+.givens { border: 1px solid #e2e6f2; border-radius: 10px; overflow: hidden; margin: 13px 0 17px; background: #f6f7fc; }
+.given-line { display: flex; align-items: center; justify-content: space-between; gap: 7px; padding: 6px 8px 6px 13px; min-height: 43px; }
+.given-line + .given-line { border-top: 1px solid #e4e8f2; }
+.given-line > .math { font-size: 1.095rem; overflow-wrap: anywhere; }
+.given-line .icon-button { color: #5a6583; }
+.parts-heading { display: flex; align-items: center; justify-content: space-between; margin: 0 0 7px; color: #44526d; font-size: .82rem; font-weight: 750; }
+.part-count { font-size: .75rem; color: var(--muted); font-weight: 650; }
+.part-list { display: grid; gap: 5px; }
+.part-button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: start;
+  gap: 9px;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 8px;
+  text-align: left;
+  font-size: .91rem;
+  line-height: 1.39;
+  padding: 7px 7px 7px 5px;
+  color: #25334f;
+}
+.part-button:hover { background: #f4f6fb; }
+.part-button.is-active { background: var(--primary-weak); border-color: #dcd4ff; }
+.part-letter { display: grid; place-items: center; width: 25px; height: 23px; border-radius: 6px; background: #edf1f8; color: #515f7a; font-family: var(--font); font-size: .77rem; font-weight: 780; }
+.part-button.is-active .part-letter { background: #6152ce; color: #fff; }
+.part-letter.checked { background: #e3f6ee; color: var(--success); }
+.part-button.is-active .part-letter.checked { background: var(--success); color: #fff; }
+.target { margin: 4px 8px 5px 40px; font-size: .875rem; }
+.target summary { color: var(--primary-dark); cursor: pointer; font-weight: 650; }
+.target .givens { margin: 6px 0; }
+.source { color: var(--muted); font-size: .78rem; margin: 15px 0 0; }
+
+.workspace { display: flex; flex-direction: column; overflow: hidden; }
+.workspace-head { display: flex; align-items: baseline; justify-content: space-between; gap: 9px; padding: 20px 20px 12px; }
+.workspace-head h2 { font-size: 1.26rem; margin: 0; letter-spacing: -.026em; }
+.workspace-status { color: var(--muted); font-size: .78rem; }
+.workspace-tools { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 18px 12px; align-items: center; }
+.workspace-tools .action { padding-inline: 8px; font-size: .825rem; }
+.workspace-tools .action svg { color: var(--primary-dark); width: 15px; height: 15px; }
+.sheet {
+  margin: 0 18px;
+  padding: 9px;
+  min-height: 143px;
+  border: 1px solid #e1e4ef;
+  background-color: #fcfcfe;
+  background-image: radial-gradient(#ccd3e64f 1px, transparent 1px);
+  background-size: 13px 13px;
+  border-radius: 10px;
+}
+.block + .block { margin-top: 7px; }
+.block { border: 1px solid #e0e4ee; border-radius: 8px; background: #fff; min-width: 0; }
+.block.is-focused { border-color: #bcaff3; box-shadow: 0 0 0 1px #dbd5f744; }
+.block.is-selected { border-color: #a99be9; }
+.block-line { display: flex; align-items: stretch; min-height: 48px; gap: 1px; position: relative; }
+.block-index { align-self: center; display: inline-grid; place-items: center; margin-left: 6px; width: 25px; height: 27px; color: #6a7691; font-size: .77rem; font-weight: 690; font-variant-numeric: tabular-nums; background: #f1f3f8; border: 1px solid transparent; border-radius: 6px; padding: 0; flex: none; }
+.block-index[aria-pressed="true"] { background: var(--primary); color: #fff; }
+.block-index:hover { border-color: #c0b5f4; }
+.block-controls { display: flex; align-items: center; gap: 1px; padding: 0 4px; flex: none; }
+.block-controls .icon-button { width: 25px; height: 28px; }
+.block-controls .icon-button svg { width: 14px; height: 14px; }
+.block-heading { display: flex; align-items: center; gap: 5px; min-height: 38px; border-bottom: 1px solid #e5e8f1; padding-right: 4px; }
+.block-heading strong { font-size: .86rem; flex: 1; margin-left: 5px; }
+.block-body { padding: 9px 10px 10px; }
+.block-body textarea, .block-body input[type="text"], .axis-fields input {
+  display: block;
+  border: 1px solid #dfe4ef;
+  border-radius: 7px;
+  color: var(--ink);
+  background: #fff;
+  padding: 6px 8px;
+  min-width: 0;
+}
+.block-body textarea { width: 100%; min-height: 76px; resize: vertical; font-size: .93rem; line-height: 1.5; }
+.block-body textarea::placeholder { color: #65728f; }
+.matrix-options { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; flex-wrap: wrap; }
+.matrix-options label { display: inline-flex; align-items: center; gap: 5px; }
+.matrix-options label, .matrix-options select { font-size: .835rem; }
+select {
+  appearance: none;
+  padding: 5px 26px 5px 8px;
+  border: 1px solid #dbe1ee;
+  border-radius: 7px;
+  color: var(--ink);
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%23586582' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='m3 4.5 3 3 3-3'/%3E%3C/svg%3E") no-repeat right 7px center;
+}
+.matrix-scroll { overflow-x: auto; padding-bottom: 3px; }
+.math-matrix { display: inline-block; margin: 2px 3px; padding: 3px 7px; border-left: 2px solid #39496b; border-right: 2px solid #39496b; border-radius: 5px; vertical-align: middle; }
+.math-matrix table { border-collapse: separate; border-spacing: 4px 3px; }
+.math-matrix td { text-align: center; padding: 0 5px; }
+.matrix-input td { padding: 0; background: #f8f9fe; border: 1px solid #e5e8f2; border-radius: 5px; }
+.matrix-input .entry { text-align: center; min-width: 40px; width: 100%; padding: 4px; min-height: 32px; }
+.case-row { border: 1px solid #e0e5f0; border-radius: 7px; overflow: hidden; }
+.case-row + .case-row { margin-top: 8px; }
+.case-title { display: flex; align-items: center; gap: 6px; padding: 5px 7px; background: #f6f7fb; }
+.case-title input[type="text"] { border-color: transparent; background: transparent; width: 100%; font-size: .89rem; font-weight: 650; }
+.case-field { display: grid; grid-template-columns: 82px minmax(0, 1fr); padding: 1px 6px; }
+.case-field > span:first-child { align-self: center; color: var(--muted); font-size: .8rem; }
+.case-field + .case-field { border-top: 1px solid #e8ebf4; }
+.case-row + .action { margin-top: 7px; }
+
+.math { font-family: var(--math-font); font-size: 1.07em; line-height: 1.42; }
+.math-letter { font-family: var(--math-font); font-weight: 400; }
+.math-op { padding-inline: .18em; }
+.math sub, .math sup, .entry sub, .entry sup { line-height: 0; font-size: .72em; }
+.math-hat { position: relative; }
+.math-hat::before { content: "ˆ"; position: absolute; font-size: .9em; left: .20em; top: -.45em; font-style: normal; pointer-events: none; }
+.fraction { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; align-items: stretch; min-width: .65em; gap: 1px; margin-inline: .10em; padding-block: .05em; line-height: 1.06; }
+.fraction > span { padding-inline: .12em; }
+.fraction > span:first-child { border-bottom: 1px solid currentColor; padding-bottom: .11em; }
+.fraction > span + span { padding-top: .10em; }
+.fraction .fraction { font-size: .95em; }
+.radical { display: inline-flex; align-items: stretch; vertical-align: middle; }
+.root-glyph { line-height: 1.05; font-size: 1.12em; }
+.radicand { border-top: 1px solid currentColor; margin: .09em 0 0 -.045em; padding: 0 .14em; line-height: 1.08; }
+.radical .root-index { align-self: flex-start; margin-right: -.11em; margin-top: .22em; }
+.entry { min-width: 0; flex: 1; min-height: 39px; padding: 9px 5px; align-self: center; font-family: var(--math-font); font-size: 1.12rem; line-height: 1.37; overflow-x: auto; white-space: nowrap; color: #1c2742; cursor: text; border-radius: 5px; scrollbar-width: thin; }
+.entry:focus-visible { outline: 1px solid #b9abef; outline-offset: -2px; }
+.entry .math-sequence { display: inline-block; min-width: .55em; min-height: 1em; vertical-align: baseline; }
+.math-sequence.is-empty:not(.root-sequence) { min-width: .68em; min-height: .85em; border-radius: 2px; background: #eeeaff; box-shadow: inset 0 0 0 1px #cbbff3; }
+.math-sequence.is-slot-active:not(.root-sequence) { background: #f0ebff; border-radius: 3px; }
+.entry .math-sequence.root-sequence { min-width: 100%; }
+.math-sequence .math-atom { display: inline-block; }
+.entry .sup-slot, .entry .sub-slot { display: inline-block; line-height: 1.02; font-size: .72em; }
+.entry .sup-slot { transform: translateY(-.64em); }
+.entry .sub-slot { transform: translateY(.30em); }
+.entry { position: relative; }
+.entry-placeholder { position: absolute; left: 9px; top: 11px; font-family: var(--font); color: #64718c; font-size: .875rem; pointer-events: none; }
+.caret { display: inline-block; position: relative; width: 0; height: 1em; vertical-align: -.15em; pointer-events: none; }
+.caret::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 1.5px; background: #604ada; }
+.function-name { font-style: normal; }
+
+.keypad { padding: 13px 18px 13px; }
+.keypad-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 7px; }
+.keypad-title { color: #485570; font-size: .83rem; font-weight: 750; }
+.keypad-tabs { display: flex; align-items: center; gap: 3px; }
+.keypad-tab { color: #54617b; background: transparent; border: 0; border-radius: 6px; padding: 4px 7px; font-size: .81rem; white-space: nowrap; }
+.keypad-tab[aria-pressed="true"] { background: var(--primary-weak); color: var(--primary-dark); font-weight: 720; }
+.keypad-tab:hover { background: #f1f2fb; }
+.keys { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.keys + .keys { margin-top: 5px; }
+.key {
+  min-width: 31px;
+  min-height: 31px;
+  border-radius: 6px;
+  padding: 3px 6px;
+  background: #f6f8fd;
+  border: 1px solid #dfe4f0;
+  color: #29385a;
+  font-family: var(--math-font);
+  line-height: 1.1;
+  font-size: 1.02rem;
+  text-align: center;
+}
+.key:hover { background: #eae6ff; border-color: #b5a7f2; color: var(--primary-dark); }
+.key.operator { color: var(--primary-dark); background: #f1eeff; border-color: #e0dafa; }
+.key.word { padding-inline: 6px; font-family: var(--font); font-size: .73rem; font-weight: 650; }
+.key.template { min-width: 42px; }
+.key sup { font-size: .69em; }
+.key-fraction { display: inline-flex; flex-direction: column; font-size: .58em; line-height: .82; vertical-align: middle; }
+.key-fraction span:first-child { border-bottom: 1px solid; padding-bottom: 2px; }
+.key-fraction span:last-child { padding-top: 2px; }
+
+.checking { background: #fafbff; border-top: 1px solid #e3e7f1; padding: 11px 18px 13px; }
+.check-actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 7px; align-items: center; }
+.check-context { font-weight: 700; font-size: .84rem; color: #4c5b79; }
+.check-buttons { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.check-buttons .action { min-height: 35px; font-size: .82rem; }
+.selection-count { display: block; color: var(--muted); font-size: .75rem; margin-top: 3px; font-weight: 400; }
+.feedback { border-radius: 8px; margin-top: 8px; padding: 9px 10px; background: var(--primary-weak); color: #423778; font-size: .875rem; line-height: 1.46; }
+.feedback p { margin: 0; }
+.feedback p + p { margin-top: 5px; }
+.feedback.good { background: var(--success-bg); color: var(--success); }
+.feedback.try { background: var(--attention-bg); color: var(--attention); }
+.feedback .action { margin-top: 7px; }
+.help-strip { margin: 12px 1px 0; color: var(--muted); font-size: .83rem; line-height: 1.45; }
+
+.graph-grid { width: 100%; max-height: 300px; border: 1px solid #e2e7f3; border-radius: 7px; display: block; background: #fbfcff; touch-action: manipulation; cursor: crosshair; }
+.graph-grid text { font-family: var(--font); font-size: 10px; fill: #50617e; pointer-events: none; }
+.graph-grid .graph-label { fill: #283554; font-size: 11px; font-weight: 700; }
+.graph-tools { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; margin-bottom: 7px; }
+.graph-tools .action { font-size: .76rem; min-height: 29px; padding-inline: 6px; }
+.graph-tools .is-active { background: var(--primary-weak); color: var(--primary-dark); border-color: var(--primary-line); }
+.graph-footer { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; color: var(--muted); font-size: .8rem; }
+.graph-footer input[type="text"] { width: 100%; padding: 4px 6px; font-size: .815rem; }
+.graph-footer select { max-width: 120px; font-size: .8rem; }
+.graph-footer label { display: flex; align-items: center; gap: 5px; }
+.graph-hint { min-height: 1.2em; color: #515f7c; font-size: .79rem; margin: 6px 0 0; }
+.graph-settings { margin-top: 7px; font-size: .82rem; }
+.graph-settings summary { color: var(--primary-dark); cursor: pointer; }
+.axis-fields { display: grid; grid-template-columns: repeat(3,minmax(0, 1fr)); gap: 5px 7px; margin-top: 5px; }
+.axis-fields input { margin-top: 2px; width: 100%; padding: 4px; }
+
+@media (max-width: 1230px) {
+  .chapter-header { align-items: start; }
+  .header-actions { margin-top: 3px; }
+  .workspace-tools .action { font-size: .8rem; }
+}
+@media (max-width: 1050px) {
+  :root { --sidebar-width: 236px; }
+  .sidebar { padding-inline: 12px; }
+  .main { padding-inline: 21px; }
+  .work-grid { grid-template-columns: minmax(250px, .84fr) minmax(340px, 1.16fr); gap: 12px; }
+  .problem { padding: 16px; }
+  .chapter-header { flex-wrap: wrap; }
+  .workspace-head { padding-inline: 13px; }
+  .workspace-tools, .keypad, .checking { padding-inline: 11px; }
+  .sheet { margin-inline: 11px; }
+}
+@media (max-width: 900px) {
+  .app-shell { grid-template-columns: minmax(0, 1fr); }
+  .sidebar { display: none; }
+  .mobile-nav { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 9px 14px; background: var(--nav); color: #fff; }
+  .mobile-brand { display: flex; align-items: center; gap: 8px; font-size: .96rem; font-weight: 730; white-space: nowrap; }
+  .mobile-brand .brand-icon { height: 30px; width: 30px; border-radius: 8px; }
+  .mobile-brand .brand-icon svg { height: 19px; width: 19px; }
+  .mobile-nav select { max-width: 49%; font-size: .82rem; }
+  .main { padding-top: 22px; }
+  .work-grid { grid-template-columns: minmax(250px, .85fr) minmax(340px, 1.15fr); }
+}
+@media (max-width: 660px) {
+  .main { padding-inline: 10px; }
+  .chapter-header { margin-bottom: 13px; gap: 9px; padding-inline: 4px; }
+  .work-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .exercise-nav, .skill-categories { margin-bottom: 10px; }
+  .exercise-chip { min-height: 34px; padding: 5px 7px; font-size: .8rem; }
+  .problem { padding: 15px 13px; }
+  .part-list { gap: 2px; }
+  .part-button { padding-block: 5px; }
+  .key { min-height: 36px; min-width: 34px; }
+  .workspace-status { font-size: .73rem; }
+  .sheet { min-height: 105px; }
+  .workspace-head { padding-top: 14px; }
+  .help-strip { margin-inline: 5px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  button { transition: background-color 105ms ease, border-color 105ms ease, color 105ms ease; }
+}
+
+</style>
+</head>
+<body>
+  <div id="app"></div>
+  <noscript>This workbook needs JavaScript to edit and check your work.</noscript>
+  <script>
+"use strict";
+
+const MathLab = (() => {
+  const greek = {
+    alpha: "α", beta: "β", theta: "θ", rho: "ρ", lambda: "λ",
+    mu: "μ", sigma: "σ", epsilon: "ε", pi: "π", Delta: "Δ"
+  };
+  const functions = new Set(["sqrt", "root", "ln", "log", "exp", "abs", "D", "D2", "diff", "prime", "p", "f", "g", "h", "u", "Y", "V", "E", "G", "C", "R"]);
+  const precedence = {"=": 1, "<": 1, ">": 1, "<=": 1, ">=": 1, "!=": 1, "~=": 1, "+": 2, "-": 2, "*": 3, "/": 3, "^": 5};
+  const visibleOps = {"-": "−", "*": "·", "<=": "≤", ">=": "≥", "!=": "≠", "~=": "≈"};
+  const escapes = {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"};
+
+  function escape(value) {
+    return String(value).replace(/[&<>"']/g, character => escapes[character]);
+  }
+
+  function normalize(source) {
+    return String(source).trim().replace(/[αβθρλμσεπΔ]/g, symbol => Object.keys(greek).find(key => greek[key] === symbol))
+      .replace(/−/g, "-").replace(/[×·]/g, "*").replace(/÷/g, "/")
+      .replace(/≤/g, "<=").replace(/≥/g, ">=").replace(/≠/g, "!=").replace(/≈/g, "~=");
+  }
+
+  function lex(source) {
+    const text = normalize(source);
+    const tokens = text.match(/\d+(?:\.\d*)?|\.\d+|[A-Za-z][A-Za-z0-9_]*|<=|>=|!=|~=|[=<>+\-*/^(),]/g) || [];
+    if (tokens.join("") !== text.replace(/\s/g, "")) throw Error("Unsupported notation");
+    return tokens;
+  }
+
+  function parse(source) {
+    const tokens = lex(source);
+    let cursor = 0;
+
+    function next() { return tokens[cursor]; }
+    function consume(expected) {
+      if (next() !== expected) throw Error("Expected " + expected);
+      cursor += 1;
+    }
+    function startsTerm(token) {
+      return token && /^(?:[A-Za-z]|[0-9.]|\()/.test(token);
+    }
+
+    function prefix() {
+      const token = tokens[cursor++];
+      if (!token) throw Error("Incomplete expression");
+      if (token === "+" || token === "-") return {type: "unary", op: token, right: expression(4)};
+      if (token === "(") {
+        const value = expression(1);
+        consume(")");
+        return {type: "group", value};
+      }
+      if (/^[0-9.]/.test(token)) return {type: "number", value: token};
+      if (!/^[A-Za-z]/.test(token)) throw Error("Expected a number or variable");
+      if (functions.has(token) && next() === "(") {
+        const args = [];
+        consume("(");
+        do {
+          args.push(expression(1));
+          if (next() !== ",") break;
+          consume(",");
+        } while (next());
+        consume(")");
+        return {type: "call", name: token, args};
+      }
+      return {type: "variable", name: token};
+    }
+
+    function expression(minPrecedence) {
+      let left = prefix();
+      while (cursor < tokens.length) {
+        const implied = startsTerm(next());
+        const op = implied ? "*" : next();
+        const rank = precedence[op];
+        if (rank === undefined || rank < minPrecedence) break;
+        if (!implied) cursor += 1;
+        const right = expression(op === "^" ? rank : rank + 1);
+        left = {type: "binary", op, left, right, implied};
+      }
+      return left;
+    }
+
+    const output = expression(1);
+    if (cursor !== tokens.length) throw Error("Finish the expression");
+    return output;
+  }
+
+  function ungroup(node) {
+    while (node?.type === "group") node = node.value;
+    return node;
+  }
+
+  function label(name) {
+    const [base, ...suffixes] = name.split("_");
+    const sub = suffixes.filter(suffix => !["star", "prime", "m", "h", "hat"].includes(suffix));
+    const sup = suffixes.filter(suffix => ["star", "prime", "m", "h"].includes(suffix));
+    const accents = {star: "∗", prime: "′"};
+    const body = greek[base] || escape(base);
+    return '<i class="math-letter' + (suffixes.includes("hat") ? " math-hat" : "") + '">' + body + "</i>"
+      + (sub.length ? "<sub>" + escape(sub.join(",")) + "</sub>" : "")
+      + (sup.length ? "<sup>" + escape(sup.map(item => accents[item] || item).join("")) + "</sup>" : "");
+  }
+
+  function fraction(top, bottom) {
+    return '<span class="fraction"><span>' + top + '</span><span>' + bottom + '</span></span>';
+  }
+
+  function radical(body, index = "") {
+    return '<span class="radical">' + (index ? '<sup class="root-index">' + index + '</sup>' : "")
+      + '<span class="root-glyph">√</span><span class="radicand">' + body + "</span></span>";
+  }
+
+  function render(node) {
+    if (node.type === "number") return escape(node.value);
+    if (node.type === "variable") return label(node.name);
+    if (node.type === "group") return "(" + render(node.value) + ")";
+    if (node.type === "unary") return (visibleOps[node.op] || node.op) + render(node.right);
+    if (node.type === "binary") {
+      if (node.op === "/") return fraction(render(ungroup(node.left)), render(ungroup(node.right)));
+      if (node.op === "^") return render(node.left) + "<sup>" + render(ungroup(node.right)) + "</sup>";
+      const leadingNumber = ungroup(node.left).type === "number";
+      const trailingSymbol = ["variable", "call", "group"].includes(node.right.type);
+      const adjacentPowers = node.right.type === "binary" && node.right.op === "^";
+      const tight = node.op === "*" && (node.implied || (leadingNumber && trailingSymbol) || adjacentPowers
+        || ((node.left.type !== "number") && (trailingSymbol || node.right.type === "unary")));
+      const op = tight ? "" : '<span class="math-op">' + escape(visibleOps[node.op] || node.op) + "</span>";
+      return render(node.left) + op + render(node.right);
+    }
+    const args = node.args.map(render);
+    if (node.name === "sqrt" && args.length === 1) return radical(args[0]);
+    if (node.name === "root" && args.length === 2) return radical(args[0], args[1]);
+    if (node.name === "abs" && args.length === 1) return "|" + args[0] + "|";
+    if (node.name === "D" && args.length === 2) return fraction("∂" + args[0], "∂" + args[1]);
+    if (node.name === "D2" && args.length === 3) return fraction("∂²" + args[0], "∂" + args[1] + " ∂" + args[2]);
+    if (node.name === "diff" && args.length === 2) return fraction("d" + args[0], "d" + args[1]);
+    if (node.name === "prime" && args.length === 2) return args[0] + "′(" + args[1] + ")";
+    const name = ["ln", "log", "exp"].includes(node.name) ? node.name : label(node.name);
+    return name + "(" + args.join(", ") + ")";
+  }
+
+  function format(source) {
+    try { return '<span class="math">' + render(parse(source)) + "</span>"; }
+    catch { return '<span class="math">' + escape(source) + "</span>"; }
+  }
+
+  function rich(text) {
+    return String(text).split(/(\{\{[^{}]+\}\})/g).map(piece => piece.startsWith("{{") && piece.endsWith("}}")
+      ? format(piece.slice(2, -2)) : escape(piece)).join("");
+  }
+
+  function evaluate(node, variables) {
+    if (node.type === "number") return Number(node.value);
+    if (node.type === "group") return evaluate(node.value, variables);
+    if (node.type === "variable") {
+      if (node.name === "e") return Math.E;
+      return variables[node.name];
+    }
+    if (node.type === "unary") return (node.op === "-" ? -1 : 1) * evaluate(node.right, variables);
+    if (node.type === "binary") {
+      const left = evaluate(node.left, variables);
+      const right = evaluate(node.right, variables);
+      switch (node.op) {
+        case "+": return left + right;
+        case "-": return left - right;
+        case "*": return left * right;
+        case "/": return left / right;
+        case "^": return left ** right;
+        default: return left - right;
+      }
+    }
+    if (["D", "diff", "D2"].includes(node.name)) {
+      const variable = ungroup(node.args[1])?.name;
+      const at = variables[variable];
+      if (!Number.isFinite(at)) return NaN;
+      const step = 1e-4 * Math.max(1, Math.abs(at));
+      const shifted = delta => ({...variables, [variable]: at + delta});
+      if (node.name === "D2" && ungroup(node.args[2])?.name !== variable) {
+        return evaluate({type:"call",name:"D",args:[{type:"call",name:"D",args:node.args.slice(0,2)},node.args[2]]},variables);
+      }
+      if (node.name === "D2") return (evaluate(node.args[0],shifted(step)) - 2 * evaluate(node.args[0],variables) + evaluate(node.args[0],shifted(-step))) / step ** 2;
+      return (evaluate(node.args[0], shifted(step)) - evaluate(node.args[0], shifted(-step))) / (2 * step);
+    }
+    const inputs = node.args.map(arg => evaluate(arg, variables));
+    const [first, second] = inputs;
+    switch (node.name) {
+      case "sqrt": return Math.sqrt(first);
+      case "root": return first ** (1 / second);
+      case "ln": return Math.log(first);
+      case "log": return second ? Math.log(first) / Math.log(second) : Math.log(first);
+      case "exp": return Math.exp(first);
+      case "abs": return Math.abs(first);
+      case "prime": {
+        const name = ungroup(node.args[0])?.name;
+        return 2 * weight((name || "") + "0") * second + 0.4;
+      }
+      default: return abstractFunction(node.name, inputs);
+    }
+  }
+
+  function weight(name = "") {
+    return 0.3 + (Array.from(name).reduce((sum, c) => sum + c.charCodeAt(0), 0) % 23) / 17;
+  }
+
+  function abstractFunction(name, inputs) {
+    return 0.8 + inputs.reduce((sum, value, index) => sum + weight(name + index) * value ** 2 + 0.4 * value, 0);
+  }
+
+  function variablesOf(node, list) {
+    if (node.type === "variable" && node.name !== "e") list.add(node.name);
+    if (node.type === "binary") {
+      variablesOf(node.left, list);
+      variablesOf(node.right, list);
+    }
+    if (node.type === "group") variablesOf(node.value, list);
+    if (node.type === "unary") variablesOf(node.right, list);
+    if (node.type === "call") {
+      const args = node.name === "prime" ? node.args.slice(1) : node.args;
+      for (const child of args) variablesOf(child, list);
+    }
+    return list;
+  }
+
+  function sampleValues(names, index, assumptions) {
+    const values = {};
+    for (const name of names) {
+      const phase = Math.sin((index + 0.729) * (weight(name) + 3.56) * 7.7163);
+      const unit = 0.5 + phase / 2;
+      if (name in assumptions) {
+        const [lower, upper] = assumptions[name];
+        values[name] = lower + (upper - lower) * (0.04 + 0.92 * unit);
+      } else if (["alpha","beta","theta","rho","epsilon","r"].includes(name)) {
+        values[name] = 0.13 + 0.27 * unit;
+      } else if (name === "sigma") {
+        values[name] = 1.25 + 1.25 * unit;
+      } else {
+        values[name] = 0.65 + 4.65 * unit + weight(name) / 5;
+      }
+    }
+    return values;
+  }
+
+  function close(a, b, tolerance) {
+    return Math.abs(a - b) <= tolerance * Math.max(1, Math.abs(a), Math.abs(b));
+  }
+
+  function relation(node) {
+    return node?.type === "binary" && precedence[node.op] === 1;
+  }
+
+  function compareNumeric(candidate, target, assumptions, proportional = false, tolerance = 1e-7) {
+    const names = variablesOf(candidate, variablesOf(target, new Set()));
+    let good = 0;
+    let scale;
+    for (let i = 0; i < 15; i += 1) {
+      const values = sampleValues(names, i, assumptions);
+      const left = evaluate(candidate, values);
+      const right = evaluate(target, values);
+      if (!Number.isFinite(left) || !Number.isFinite(right)) continue;
+      if (proportional && scale === undefined && Math.abs(right) > 1e-10) scale = left / right;
+      if (!close(left, (scale ?? 1) * right, tolerance)) return false;
+      good += 1;
+    }
+    return good >= (names.size ? 6 : 1) && (!proportional || (Number.isFinite(scale) && Math.abs(scale) > 1e-10));
+  }
+
+  function matchExpression(input, goal, assumptions) {
+    try {
+      const candidate = ungroup(parse(input));
+      const target = ungroup(parse(goal.value));
+      if (goal.type === "relation") {
+        if (!relation(candidate) || !relation(target)) return false;
+        if (target.op === "=" && candidate.op === "=") return compareNumeric(candidate, target, assumptions, true, 1e-6);
+        const directions = {"<": -1, "<=": -1, ">": 1, ">=": 1};
+        if (!(candidate.op in directions) || !(target.op in directions) || candidate.op.length !== target.op.length) return false;
+        const oriented = node => directions[node.op] > 0 ? node : {...node, left: node.right, right: node.left};
+        const left = oriented(candidate);
+        const right = oriented(target);
+        if (compareNumeric(left, right, assumptions)) return true;
+        const names = variablesOf(left, variablesOf(right, new Set()));
+        const scales = Array.from({length: 15}, (_, i) => sampleValues(names, i, assumptions))
+          .map(values => evaluate(left, values) / evaluate(right, values)).filter(Number.isFinite);
+        return scales.length >= 6 && scales.every(value => value > 0)
+          && compareNumeric(left, right, assumptions, true);
+      }
+      if (relation(candidate) && !["=","~="].includes(candidate.op)) return false;
+      const expressions = relation(candidate) ? [ungroup(candidate.right), ungroup(candidate.left)] : [candidate];
+      return expressions.some(expr => compareNumeric(expr, target, assumptions, false, goal.tolerance ?? 1e-7));
+    } catch { return false; }
+  }
+
+  function matchOne(answer, goal, assumptions) {
+    if (goal.type !== "matrix") return typeof answer === "string"
+      && [goal.value,...(goal.alternatives || [])].some(value => matchExpression(answer,{...goal,value},assumptions));
+    if (!Array.isArray(answer) || answer.length !== goal.value.length) return false;
+    return goal.value.every((row, i) => answer[i].length === row.length && row.every((cell, j) =>
+      matchExpression(answer[i][j], {value: String(cell)}, assumptions)));
+  }
+
+  function assess(answers, goals, assumptions = {}) {
+    const available = answers.slice();
+    let matches = 0;
+    for (const goal of goals) {
+      const index = available.findIndex(answer => matchOne(answer, goal, assumptions));
+      if (index >= 0) {
+        matches += 1;
+        available.splice(index, 1);
+      }
+    }
+    return {matches, total: goals.length};
+  }
+
+  function determinant(matrix) {
+    if (matrix.length === 1) return matrix[0][0];
+    return matrix[0].reduce((sum, value, index) => sum + (-1) ** index * value * determinant(matrix.slice(1)
+      .map(row => row.filter((_, column) => column !== index))), 0);
+  }
+
+  function at(node, variables) { return evaluate(typeof node === "string" ? parse(node) : node, variables); }
+
+  return { escape, label, fraction, radical, normalize, lex, parse, ungroup, render, format, rich, assess, determinant, at, relation, visibleOps, greek };
+})();
+
+</script>
+  <script>
+"use strict";
+
+const Course = (() => {
+  const {determinant} = MathLab;
+  const formula = code => ({code});
+  const matrix = (name, rows) => ({name, rows});
+  const val = (value, options = {}) => ({value: String(value), ...options});
+  const eq = value => ({type:"relation", value});
+  const mat = value => ({type:"matrix", value});
+  const part = (question, hint, answer, checks = []) => ({question, hint, answer, checks});
+  const exercise = (title, intro, givens, parts, symbols, assumptions = {}) => ({title, intro, givens, parts, symbols, assumptions});
+  const fixed = (title, build) => ({title, build, variants:false});
+  const varied = (title, build) => ({title, build, variants:true});
+  const joined = values => values.map(value => "{{" + value + "}}").join(", ");
+  const square = name => name + "^2";
+
+  const chapters = [
+    {
+      number: 1, label: "Derivatives and Differentials", section: "§1.7",
+      exercises: [
+        fixed("Marginal revenue", () => exercise(
+          "Marginal revenue", "A producer sells output {{y}} at price {{p}}.", [],
+          [
+            part("Treat price as given. Set up the revenue function and derive marginal revenue.",
+              "How do you get total sales revenue from a unit price and a quantity?",
+              "Revenue is {{R(y)=p*y}}. Since price is fixed, marginal revenue is {{p}}.",
+              [val("p*y"), val("p")]),
+            part("Now price depends on output through {{p(y)}}. Set up revenue and derive marginal revenue.",
+              "Both factors in the revenue expression now depend on output.",
+              "Write {{R(y)=y*p(y)}}. The product rule gives {{D(R(y),y)=p(y)+y*prime(p,y)}}.",
+              [val("y*p(y)"), val("p(y)+y*prime(p,y)")])
+          ], ["y","p","R","p(y)","prime(p,y)"])),
+        fixed("Marginal utility and substitution", () => exercise(
+          "Marginal utility and substitution", "A consumer has Cobb–Douglas utility with {{0<alpha<1}}. Along an indifference curve utility stays at a fixed level.",
+          [formula("u(x_1,x_2)=x_1^alpha*x_2^(1-alpha)"), formula("u(x_1,x_2)=c")],
+          [
+            part("Find marginal utility of good 1.", "Vary good 1 and hold good 2 fixed.",
+              "{{D(u,x_1)=alpha*x_1^(alpha-1)*x_2^(1-alpha)}}.", [val("alpha*x_1^(alpha-1)*x_2^(1-alpha)")]),
+            part("Find the slope of the indifference curve {{diff(x_2,x_1)}}.",
+              "Write the total differential and ask what it must equal along the curve.",
+              "Set the total differential to zero and solve for the ratio of changes. The slope is {{-alpha*x_2/((1-alpha)*x_1)}}.",
+              [val("-alpha*x_2/((1-alpha)*x_1)")])
+          ], ["x_1","x_2","alpha","u","du","dx_1","dx_2","c"])),
+        fixed("Marginal product and technical substitution", () => exercise(
+          "Marginal product and technical substitution",
+          "Capital {{K}} and labor {{L}} produce output. An isoquant holds output fixed. Assume {{rho<1}} and {{rho!=0}}.",
+          [formula("Y(K,L)=(K^rho+L^rho)^(1/rho)")],
+          [
+            part("Find the marginal product of labor.", "Differentiate the outer power and then the term inside it that depends on labor.",
+              "{{D(Y,L)=(K^rho+L^rho)^(1/rho-1)*L^(rho-1)}}.",
+              [val("(K^rho+L^rho)^(1/rho-1)*L^(rho-1)")]),
+            part("Find the isoquant slope {{diff(K,L)}}.", "Set the total differential of output to zero. Which common factor cancels?",
+              "The negative ratio of marginal products simplifies to {{-(L/K)^(rho-1)}}.", [val("-(L/K)^(rho-1)")])
+          ], ["K","L","rho","Y","dY","dK","dL"])),
+        fixed("Elasticity of demand", () => exercise(
+          "Elasticity of demand", "Find the price elasticity in each demand model. Treat the demand parameters as fixed.",
+          [formula("x=a-b*p"), formula("x=A*p^(-epsilon)")],
+          [
+            part("Compute elasticity for linear demand.", "Price elasticity is the derivative scaled by price divided by quantity.",
+              "The derivative is {{-b}}. Multiply by {{p/x}} and substitute the linear demand to get {{-b*p/(a-b*p)}}.",
+              [val("-b*p/(a-b*p)",{alternatives:["-b*p/x"]})]),
+            part("Compute elasticity for constant-elasticity demand.", "Keep the shifter {{A}} fixed. Look for factors that appear in both the derivative and quantity.",
+              "The derivative is {{-epsilon*A*p^(-epsilon-1)}}. After scaling, elasticity simplifies to {{-epsilon}}.",
+              [val("-epsilon")])
+          ], ["x","p","a","b","A","epsilon","eta"]))
+      ]
+    },
+    {
+      number: 5, label: "Unconstrained Multivariate Optimization", section: "§5.6",
+      exercises: [
+        varied("Monopolist with two products", index => {
+          let d1 = 14;
+          let d2 = 24;
+          if (index === 1) [d1,d2] = [15,22];
+          if (index > 1) {
+            const q1 = 2 * (1 + index % 7);
+            const q2 = 4 * (1 + (index * 5) % 8);
+            d1 = (10 * q1 + 5 * q2) / 4;
+            d2 = (5 * q1 + 6 * q2) / 2;
+            if (!Number.isInteger(d1)) {
+              d1 += 0.5;
+            }
+          }
+          const a = 4 * d1;
+          const b = 2 * d2;
+          const p1 = a + "-4*q_1";
+          const p2 = b + "-2*q_2";
+          const revenue = "(" + p1 + ")*q_1+(" + p2 + ")*q_2";
+          const profit = revenue + "-(q_1^2+q_2^2+5*q_1*q_2)";
+          const f1 = a + "-10*q_1-5*q_2=0";
+          const f2 = b + "-5*q_1-6*q_2=0";
+          const q1 = "(" + (6 * a - 5 * b) + ")/35";
+          const q2 = "(" + (10 * b - 5 * a) + ")/35";
+          return exercise("Monopolist with two products",
+            "A monopolist sells two products. The demand for each product and the joint cost are given below.",
+            [formula("q_1=" + d1 + "-p_1/4"),formula("q_2=" + d2 + "-p_2/2"),formula("C(q_1,q_2)=q_1^2+q_2^2+5*q_1*q_2")],
+            [
+              part("Set up both inverse demand functions.", "Isolate the price in each demand equation. Which term has to move to the other side?",
+                "The inverse demands are {{p_1=" + p1 + "}} and {{p_2=" + p2 + "}}.", [val(p1),val(p2)]),
+              part("Use inverse demand to write total revenue.", "Each product contributes its price times its quantity.",
+                "Total revenue is {{R=" + revenue + "}}.", [val(revenue)]),
+              part("Set up profit maximization, derive the first-order conditions, and solve for the candidate outputs.",
+                "Express profit using quantities. Differentiate once for each quantity and solve the simultaneous equations.",
+                "Profit is {{pi=" + profit + "}}. The first-order conditions are " + joined([f1,f2])
+                  + ". Solving them gives {{q_1_star=" + q1 + "}} and {{q_2_star=" + q2 + "}}.",
+                [val(profit),eq(f1),eq(f2),val(q1),val(q2)]),
+              part("Construct the Hessian of the profit function.", "Use the derivatives of the two marginal profit expressions, including their cross terms.",
+                "The diagonal entries are {{-10}} and {{-6}}. Both off-diagonal entries are {{-5}}.",
+                [mat([[-10,-5],[-5,-6]])]),
+              part("Apply the second-order test to justify a profit maximum.", "Which signs do the leading entry and determinant need for negative definiteness?",
+                "The first leading principal minor is {{-10}}. The determinant is {{35}}, so the Hessian is negative definite and the candidate is a strict maximum.",
+                [val(-10),val(35)]),
+              part("What is the shape of profit over all feasible outputs?", "Does the Hessian depend on the quantities?",
+                "The Hessian is constant and negative definite. Thus profit is strictly concave throughout the feasible domain, and the feasible stationary point is the unique global maximizer.")
+            ],["q_1","q_2","p_1","p_2","q_1_star","q_2_star","pi","R","C","H","det_H"]);
+        }),
+        varied("Monopoly across three markets", index => {
+          const [a,b,c,m,f] = index ? [24 + 8 * (index % 5),24 + 10 * (index % 6),24 + 12 * (index % 7),12,16 + index % 9] : [20,20,30,15,20];
+          const intercepts = [a,b,c];
+          const slopes = [4,5,6];
+          const revenues = intercepts.map((value,i) => "(" + value + "-" + slopes[i] + "*x_" + (i+1) + ")*x_" + (i+1));
+          const marginals = intercepts.map((value,i) => value + "-" + 2 * slopes[i] + "*x_" + (i+1));
+          const solutions = intercepts.map((value,i) => "(" + (value-m) + ")/" + 2 * slopes[i]);
+          return exercise("Monopoly across three markets", "A monopolist serves three separate markets. Total output is the sum of sales in all three markets.",
+            [formula("p_1=" + a + "-4*x_1"),formula("p_2=" + b + "-5*x_2"),formula("p_3=" + c + "-6*x_3"),formula("C(x)=" + f + "+" + m + "*x")],
+            [
+              part("Compute the three revenue functions.", "Keep the quantities separate across markets.",
+                "The revenues are " + joined(revenues) + ".", revenues.map(code => val(code))),
+              part("Compute marginal revenue in each market and marginal cost.", "Differentiate the separate revenues and aggregate cost.",
+                "Marginal revenues are " + joined(marginals) + " and marginal cost is " + joined([m]) + ".",
+                [...marginals,m].map(code => val(code))),
+              part("Find candidates for the profit-maximizing outputs.", "At an interior candidate, compare each marginal revenue to the common marginal cost.",
+                "Set each marginal revenue equal to " + joined([m]) + ". The quantities in market order are " + joined(solutions) + ".",
+                solutions.map(code => val(code))),
+              part("Derive the Hessian matrix.", "The cross derivatives would come from interaction terms in profit. Look for those terms.",
+                "The Hessian is diagonal with entries {{-8}}, {{-10}}, and {{-12}}.", [mat([[-8,0,0],[0,-10,0],[0,0,-12]])]),
+              part("Classify the stationary point.", "Determine definiteness from the diagonal entries.",
+                "All diagonal entries are negative and the off-diagonal entries are zero. Profit is strictly concave and the stationary point is a maximum.")
+            ],["x","x_1","x_2","x_3","p_1","p_2","p_3","R_1","R_2","R_3","C","pi","H"]);
+        })
+      ]
+    },
+    {
+      number: 6, label: "Optimization with Equality Constraints I", section: "§6.5",
+      exercises: [
+        varied("Identify the optimization problem", index => {
+          const a = index ? 24 + 2 * (index % 8) : 30;
+          const b = index ? 8 + index % 9 : 10;
+          const cap = index ? 7 + index % 8 : 10;
+          const output = index ? 2 + index % 4 : 1;
+          const profitA = "(" + a + "-x-3*y)*x+(" + b + "-y)*y-(30+x+2*y)";
+          const profitB = "(30-x_1)*x_1+(10-x_2)*x_2+(5-x_3)*x_3-(10+x_1+x_2+x_3)";
+          return exercise("Identify the optimization problem",
+            "For each setting, classify the problem and write its objective and any explicit constraint.",
+            [],
+            [
+              part("Two goods have inverse demands {{p_x=" + a + "-x-3*y}} and {{p_y=" + b + "-y}}. Cost is {{C(x,y)=30+x+2*y}}. The firm chooses outputs to maximize profit.",
+                "Form revenue across both products and subtract their joint cost. Is there an additional restriction on the choice variables?",
+                "Maximize {{pi=" + profitA + "}} over the output choices. The exercise gives no additional constraint on these choices.",
+                [val(profitA)]),
+              part("In three markets, {{p_1=30-x_1}}, {{p_2=10-x_2}}, and {{p_3=5-x_3}}. Cost is {{10+x_1+x_2+x_3}}. Combined sales in markets 1 and 2 may not exceed " + cap + ".",
+                "State the sales cap separately from the profit function.",
+                "Maximize {{pi=" + profitB + "}} subject to {{x_1+x_2<=" + cap + "}}.",
+                [val(profitB),eq("x_1+x_2<=" + cap)]),
+              part("A firm uses capital and labor with {{Y(K,L)=K^alpha*L^beta}} to produce " + output + " unit" + (output === 1 ? "" : "s") + " at minimum cost. Rental and wage rates are {{r}} and {{w}}.",
+                "An output target restricts input combinations. Which function contains the input prices?",
+                "Minimize {{r*K+w*L}} subject to {{K^alpha*L^beta=" + output + "}}.",
+                [val("r*K+w*L"),eq("K^alpha*L^beta=" + output)])
+            ], ["x","y","x_1","x_2","x_3","p_x","p_y","K","L","r","w","alpha","beta","pi","C"]);
+        }),
+        fixed("Logarithmic utility", () => exercise("Logarithmic utility",
+          "A consumer with income {{I}} chooses two goods at prices {{p_x}} and {{p_y}}. Prices and income are positive.",
+          [formula("u(x,y)=ln(x)+ln(y)")],
+          [
+            part("Set up the Lagrangian.", "Write the budget equation from income and spending. What slack term is zero at a binding budget?",
+              "One sign convention gives {{L=ln(x)+ln(y)+lambda*(I-p_x*x-p_y*y)}}.",
+              [val("ln(x)+ln(y)+lambda*(I-p_x*x-p_y*y)", {alternatives:["ln(x)+ln(y)+lambda*(p_x*x+p_y*y-I)"]})]),
+            part("Derive the first-order conditions.", "Differentiate with respect to each choice and the multiplier.",
+              "With the income-minus-spending convention, the system is {{1/x-lambda*p_x=0}}, {{1/y-lambda*p_y=0}}, and {{I-p_x*x-p_y*y=0}}.",
+              [eq("1/x-lambda*p_x=0"),eq("1/y-lambda*p_y=0"),eq("I-p_x*x-p_y*y=0")]),
+            part("Solve for optimal consumption.", "Eliminate the multiplier between the two consumption conditions. What does that imply for spending per good?",
+              "The first-order conditions imply {{p_x*x=p_y*y}}. The budget gives {{x_star=I/(2*p_x)}} and {{y_star=I/(2*p_y)}}.",
+              [val("I/(2*p_x)"),val("I/(2*p_y)")])
+          ], ["x","y","p_x","p_y","I","lambda","L","x_star","y_star"])),
+        fixed("Intertemporal optimization", () => exercise("Intertemporal optimization",
+          "A consumer can borrow or lend at rate {{r}} and has an initial budget of {{B}}. The second-period term in the budget is measured in present value.",
+          [formula("u(x_1,x_2)=x_1*x_2"),formula("x_1+x_2/(1+r)=B")],
+          [
+            part("Set up the utility-maximization Lagrangian.", "Use the budget equation as the constraint in present-value units.",
+              "One convention gives {{L=x_1*x_2+lambda*(B-x_1-x_2/(1+r))}}.",
+              [val("x_1*x_2+lambda*(B-x_1-x_2/(1+r))", {alternatives:["x_1*x_2+lambda*(x_1+x_2/(1+r)-B)"]})]),
+            part("Derive the first-order conditions.", "The second-period derivative of spending includes the discount factor.",
+              "The system is {{x_2-lambda=0}}, {{x_1-lambda/(1+r)=0}}, and {{B-x_1-x_2/(1+r)=0}}.",
+              [eq("x_2-lambda=0"),eq("x_1-lambda/(1+r)=0"),eq("B-x_1-x_2/(1+r)=0")]),
+            part("Eliminate the multiplier and use the budget to solve for both consumption levels.",
+              "Use the two consumption conditions to express period-two consumption in terms of period one.",
+              "The conditions imply {{x_2=(1+r)*x_1}}. Substitution gives {{x_1_star=B/2}} and {{x_2_star=(1+r)*B/2}}.",
+              [val("B/2"),val("(1+r)*B/2")])
+          ], ["x_1","x_2","x_1_star","x_2_star","r","B","lambda","L"]))
+      ]
+    },
+    {
+      number: 7, label: "Optimization with Equality Constraints II", section: "§7.6",
+      exercises: [
+        fixed("Lagrange method", () => firmExercise("Lagrange method", [
+          part("Set up the cost-minimization Lagrangian.", "The cost is linear in inputs. The equality restricts output to the target.",
+            "One convention gives {{Lagr=r*K+w*L+lambda*(Y_0-K^alpha*L^(1-alpha))}}.",
+            [val("r*K+w*L+lambda*(Y_0-K^alpha*L^(1-alpha))", {alternatives:["r*K+w*L+lambda*(K^alpha*L^(1-alpha)-Y_0)"]})]),
+          part("Derive the first-order conditions.", "The choice variables are both inputs and the multiplier.",
+            "The input conditions are {{r-lambda*alpha*K^(alpha-1)*L^(1-alpha)=0}} and {{w-lambda*(1-alpha)*K^alpha*L^(-alpha)=0}}. The third condition is the output target.",
+            [eq("r-lambda*alpha*K^(alpha-1)*L^(1-alpha)=0"),eq("w-lambda*(1-alpha)*K^alpha*L^(-alpha)=0"),eq("K^alpha*L^(1-alpha)=Y_0")]),
+          part("Solve for the candidate input bundle as a function of the target and parameters.",
+            "Divide the two input conditions to eliminate the multiplier. Use the implied input ratio in the production constraint.",
+            "Let {{t=alpha*w/((1-alpha)*r)}}. Then {{K=t*L}}, {{L_star=Y_0/t^alpha}}, and {{K_star=Y_0*t^(1-alpha)}}.",
+            [val("Y_0*(alpha*w/((1-alpha)*r))^(1-alpha)",{alternatives:["Y_0*t^(1-alpha)"]}),val("Y_0/(alpha*w/((1-alpha)*r))^alpha",{alternatives:["Y_0/t^alpha"]})])
+        ])),
+        fixed("Tangency condition", () => firmExercise("Tangency condition", [
+          part("Put labor on the horizontal axis and capital on the vertical axis. Sketch the unit isoquant.",
+            "Solve the production constraint for capital as a function of labor.",
+            "The unit isoquant is {{K=L^(-(1-alpha)/alpha)}} for positive labor. It slopes downward and is strictly convex."),
+          part("Sketch an isocost line. State its vertical intercept and slope.", "Hold the cost level fixed in the linear cost function.",
+            "For cost level {{C}}, the isocost is {{K=C/r-(w/r)*L}}. Its intercept is {{C/r}} and slope is {{-w/r}}.",
+            [val("C/r"),val("-w/r")]),
+          part("Add the cost-minimizing isocost and mark the optimal bundle.", "Which feasible isocost is closest to the origin?",
+            "Place the lowest touching isocost tangent to the unit isoquant. With {{t=alpha*w/((1-alpha)*r)}}, the point has {{L_star=t^(-alpha)}} and {{K_star=t^(1-alpha)}}."),
+          part("Explain how the minimizing bundle satisfies tangency.", "Compare the two slopes at the point you marked.",
+            "At tangency the magnitude of the isoquant slope, the ratio of the labor and capital marginal products, equals the relative input price {{w/r}}.")
+        ])),
+        fixed("Second-order condition", () => firmExercise("Second-order condition", [
+          part("Derive the bordered Hessian.", "Use the constraint gradient in the border and the second choice-variable derivatives of the Lagrangian in the lower block.",
+            "Use {{g=Y_0-K^alpha*L^(1-alpha)}}. The first row is zero, the capital partial of g, and the labor partial of g. Its transpose is the first column. The lower block is minus the multiplier times the Hessian of production."),
+          part("Classify the stationary bundle from the Lagrange exercise.", "Check curvature along the feasible tangent direction.",
+            "For the minimization convention, the bordered determinant is negative. The quadratic form of the Lagrangian is positive on nonzero feasible tangent directions, so this stationary bundle is a constrained minimum.")
+        ])),
+        fixed("The Lagrange multiplier", () => firmExercise("The Lagrange multiplier", [
+          part("Give an economic interpretation of the multiplier.", "What outcome changes when required output increases by a little?",
+            "With the target-minus-production convention, the multiplier is the marginal change in minimized cost per additional unit of required output."),
+          part("Show that the multiplier determines the effect of the output requirement on minimized cost.", "Differentiate the value function, or differentiate the Lagrangian with respect to the target at the optimum.",
+            "Set {{t=alpha*w/((1-alpha)*r)}}. The minimized cost is {{C_star=Y_0*(r*t^(1-alpha)+w*t^(-alpha))}}. Differentiating in {{Y_0}} gives {{r*t^(1-alpha)+w*t^(-alpha)}}, which equals the multiplier by the input conditions.",
+            [val("r*(alpha*w/((1-alpha)*r))^(1-alpha)+w*(alpha*w/((1-alpha)*r))^(-alpha)",
+              {alternatives:["r*t^(1-alpha)+w*t^(-alpha)"]})])
+        ]))
+      ]
+    },
+    {
+      number: 8, label: "Optimization with Inequality Constraints", section: "§8.6",
+      exercises: [
+        fixed("Utility with perfect substitutes", () => exercise("Utility with perfect substitutes",
+          "A consumer chooses two nonnegative quantities. Utility weights, both prices, and income are positive.",
+          [formula("u(x_1,x_2)=a*x_1+b*x_2"),formula("p_1*x_1+p_2*x_2<=I"),formula("x_1>=0"),formula("x_2>=0")],
+          [
+            part("Set up a Lagrangian that allows the budget to be slack.", "Give each inequality its own multiplier, including both nonnegativity constraints.",
+              "With nonnegative multipliers on nonnegative slack terms, use {{L=a*x_1+b*x_2+lambda*(I-p_1*x_1-p_2*x_2)+mu_1*x_1+mu_2*x_2}}.",
+              [val("a*x_1+b*x_2+lambda*(I-p_1*x_1-p_2*x_2)+mu_1*x_1+mu_2*x_2")]),
+            part("Derive the full set of Kuhn–Tucker conditions.", "Include stationarity, feasibility of both variables and multipliers, and complementary slackness.",
+              "Stationarity is {{a-lambda*p_1+mu_1=0}} and {{b-lambda*p_2+mu_2=0}}. The three slacks and three multipliers are nonnegative. Each slack multiplied by its own multiplier is zero."),
+            part("List the possible binding and slack patterns.", "Make one binary choice per inequality before using feasibility or utility.",
+              "There are eight formal patterns. For each budget status, pair it with both quantities positive, only the first zero, only the second zero, or both zero. Some patterns are subsequently ruled out."),
+            part("Compute marginal utilities and use them to rule out cases.", "Does a consumer with positive marginal utility ever benefit from leaving affordable consumption unpurchased?",
+              "The marginal utilities are {{a}} and {{b}}. With positive marginal utilities the budget binds, and positive income then rules out both quantities being zero.",
+              [val("a"),val("b")]),
+            part("Solve for optimal consumption under the remaining cases.", "Compare utility earned per unit of spending on each good. Include the equality case.",
+              "If {{a/p_1>b/p_2}}, buy {{I/p_1}} of good 1 and zero of good 2. If {{a/p_1<b/p_2}}, buy zero of good 1 and {{I/p_2}} of good 2. At equality every bundle on the nonnegative budget line is optimal.")
+          ], ["x_1","x_2","a","b","p_1","p_2","I","lambda","mu_1","mu_2","L"])),
+        varied("Two-variable inequality problem", index => {
+          const B = index ? 70 + 10 * (index % 9) : 100;
+          const M = index ? B / 2 + 5 + index % 10 : 60;
+          const lagrangian = "x*y+lambda*(" + B + "-x-y)+mu*(x-" + M + ")+theta*y";
+          return exercise("Two-variable inequality problem", "Maximize the objective over the feasible region.",
+            [formula("f(x,y)=x*y"),formula("x+y<=" + B),formula("x>=" + M),formula("y>=0")],
+            [
+              part("Set up the Lagrangian.", "Write all three constraints with nonnegative slack.",
+                "One consistent form is {{L=" + lagrangian + "}}.", [val(lagrangian)]),
+              part("Derive the first-order conditions, including complementary slackness.",
+                "There are two stationarity conditions and one complementary-slackness condition per inequality.",
+                "Stationarity is {{y-lambda+mu=0}} and {{x-lambda+theta=0}}. Require nonnegative slacks and multipliers. For each pair their product is zero.",
+                [eq("y-lambda+mu=0"),eq("x-lambda+theta=0")]),
+              part("Sketch the feasible region and illustrate the solution.",
+                "Draw the equality boundary for each constraint first. Determine which side of each line is feasible.",
+                "The feasible triangle lies above the horizontal axis, to the right of the minimum-x line, and below the budget line. Mark their feasible intersection on the minimum-x and budget lines at (" + M + ", " + (B-M) + ")."),
+              part("Consider the possible active sets and derive the maximizing candidate.",
+                "First eliminate points with zero objective and points with slack budget at positive quantities. Where is the unconstrained peak along the budget line?",
+                "With positive quantities the budget binds. Along it, {{f=x*(" + B + "-x)}} peaks at {{x=" + B / 2 + "}}, below the allowed range. On the allowed range profit decreases as x rises, so {{x_star=" + M + "}} and {{y_star=" + (B-M) + "}}.",
+                [val(M),val(B-M)])
+            ], ["x","y","x_star","y_star","L","lambda","mu","theta","f"]);
+        })
+      ]
+    },
+    {
+      number: 2, label: "Higher-Order and Cross Derivatives", section: "§2.3",
+      exercises: [
+        fixed("Output elasticity", () => exercise(
+          "Output elasticity", "Productivity {{A}} and the technology parameter {{alpha}} are positive.",
+          [formula("Y(L)=A*L^alpha")],
+          [part("Compute the elasticity of output with respect to labor.", "Start with the marginal product of labor. Which two terms convert it into an elasticity?",
+            "The marginal product is {{A*alpha*L^(alpha-1)}}. Multiplying it by {{L/Y}} leaves {{alpha}}.", [val("alpha")])],
+          ["Y","L","A","alpha"])),
+        fixed("Diminishing marginal products", () => exercise(
+          "Diminishing marginal products", "Both inputs are positive and the technology parameter satisfies {{0<rho<1}}.",
+          [formula("Y(K,L)=(K^rho+L^rho)^(1/rho)")],
+          [
+            part("Show analytically that the marginal product of labor diminishes with labor.",
+              "After a second derivative with respect to labor, factor out the common power of the sum.",
+              "The second derivative is {{(rho-1)*K^rho*L^(rho-2)*(K^rho+L^rho)^(1/rho-2)}}. Positive input powers and {{rho-1<0}} give the negative sign.",
+              [val("(rho-1)*K^rho*L^(rho-2)*(K^rho+L^rho)^(1/rho-2)")]),
+            part("Show that the marginal product of labor increases with capital.",
+              "Start from the labor marginal product, then vary capital.",
+              "The cross derivative is {{(1-rho)*K^(rho-1)*L^(rho-1)*(K^rho+L^rho)^(1/rho-2)}}, which is positive.",
+              [val("(1-rho)*K^(rho-1)*L^(rho-1)*(K^rho+L^rho)^(1/rho-2)")])
+          ], ["K","L","rho","Y"])),
+        varied("First- and second-order Taylor approximations", index => {
+          const [denominator,numX,numY] = [[4,11,9],[3,12,9],[5,9,12],[6,11,8],[7,12,11],[8,8,11],[9,10,9],[5,13,8]][index % 8];
+          const p = "(1/" + denominator + ")";
+          const q = "(" + (denominator - 1) + "/" + denominator + ")";
+          const x0 = numX / 10;
+          const y0 = numY / 10;
+          const dx = "(" + x0 + "-1)";
+          const dy = "(" + y0 + "-1)";
+          const f = "x^" + p + "*y^" + q;
+          const fx = p + "*x^(" + p + "-1)*y^" + q;
+          const fy = q + "*x^" + p + "*y^(" + q + "-1)";
+          const hxx = p + "*(" + p + "-1)";
+          const hxy = p + "*" + q;
+          const hyy = q + "*(" + q + "-1)";
+          const fxx = hxx + "*x^(" + p + "-2)*y^" + q;
+          const fxy = hxy + "*x^(" + p + "-1)*y^(" + q + "-1)";
+          const fyy = hyy + "*x^" + p + "*y^(" + q + "-2)";
+          const linear = "1+" + p + "*" + dx + "+" + q + "*" + dy;
+          const quadratic = linear + "+(" + hxx + "*" + dx + "^2+2*" + hxy + "*" + dx + "*" + dy + "+" + hyy + "*" + dy + "^2)/2";
+          const actual = x0 + "^" + p + "*" + y0 + "^" + q;
+          return exercise("First- and second-order Taylor approximations",
+            "Expand the function around (1, 1). Compare its approximations at (" + x0 + ", " + y0 + ").",
+            [formula("F=" + f)], [
+              part("Find both first partial derivatives and evaluate them at (1, 1).", "Write one derivative for each input, then substitute into each.",
+                "The derivatives are " + joined([fx,fy]) + ". At (1, 1) they become " + joined([p,q]) + ".",
+                [val(fx),val(fy),val(p),val(q)]),
+              part("Compute the first-order approximation at the target point.", "Use the two changes from the expansion point and the gradient there.",
+                "The linear approximation evaluates to " + joined([linear]) + ".", [val(linear,{tolerance:0.0005})]),
+              part("Find the second partial derivatives and evaluate them at (1, 1).", "Find both own derivatives and the distinct cross derivative.",
+                "The second partials are " + joined([fxx,fxy,fyy]) + ". Their values at the expansion point are " + joined([hxx,hxy,hyy]) + ".",
+                [val(fxx),val(fxy),val(fyy),val(hxx),val(hxy),val(hyy)]),
+              part("Compute the second-order approximation.", "The cross term appears twice in the Hessian quadratic form.",
+                "Add half the Hessian quadratic form to obtain " + joined([quadratic]) + ".", [val(quadratic,{tolerance:0.0005})]),
+              part("Compare both approximations with the function's actual value.", "Evaluate the original function at the target and compare absolute errors.",
+                "The actual value is " + joined([actual]) + ". Compare each approximation's distance from that value.",
+                [val(actual,{tolerance:0.0005})])
+            ],["x","y","F","F_x","F_y","F_xx","F_xy","F_yy","T_1","T_2"]);
+        }),
+        fixed("Goods prices and factor prices", () => exercise(
+          "Goods prices and factor prices",
+          "Two competitive industries use labor and capital. The factor prices {{w}} and {{r}} are common to both sectors. The unit input coefficients are fixed.",
+          [formula("p_i=a_iL*w+a_iK*r")],
+          [
+            part("Sketch the equilibrium in factor-price space.", "Put one factor price on each axis. Each zero-profit condition defines one line.",
+              "Draw the two zero-profit lines and label their intersection as the common factor-price pair. With {{w}} horizontal and {{r}} vertical, line {{i}} has intercept {{p_i/a_iK}} and slope {{-a_iL/a_iK}}."),
+            part("Totally differentiate the equilibrium conditions.", "Coefficients are fixed. Record the change in each price.",
+              "For each industry, {{dp_i=a_iL*dw+a_iK*dr}}.", [eq("dp_i=a_iL*dw+a_iK*dr")]),
+            part("Use percentage changes to derive {{p_i_hat=theta_iL*w_hat+theta_iK*r_hat}}.",
+              "Divide the differentiated condition by the original goods price and make each factor-price change proportional.",
+              "Substitute {{dw=w*w_hat}} and {{dr=r*r_hat}} after dividing by {{p_i}}. The multipliers are the corresponding cost shares."),
+            part("Derive the wage and rental response when only the price of good 1 changes.",
+              "Set the second goods-price change to zero and solve the two equations.",
+              "With {{T=theta_1L-theta_2L}}, the solutions are {{w_hat=theta_2K*p_1_hat/T}} and {{r_hat=-theta_2L*p_1_hat/T}}. Use the nonzero determinant of the share matrix.")
+          ], ["i","p_i","a_iL","a_iK","w","r","dp_i","dw","dr","p_i_hat","p_1_hat","p_2_hat","w_hat","r_hat","theta_iL","theta_iK","theta_1L","theta_2L","theta_2K","T"]))
+      ]
+    },
+    {
+      number: 3, label: "Concave and Convex Functions", section: "§3.3",
+      exercises: [
+        varied("Rule of Sarrus", index => {
+          const [A,B] = matrices(index);
+          return exercise("Rule of Sarrus", "Use the Rule of Sarrus to find both determinants.", [matrix("A",A),matrix("B",B)],
+            [part("Compute the determinant of each matrix.", "Group the three downward products and the three upward products separately.",
+              "Subtract the upward diagonal products from the downward ones. The determinants for A and B are " + joined([determinant(A),determinant(B)]) + ".",
+              [val(determinant(A)),val(determinant(B))])], ["A","B","det_A","det_B"]);
+        }),
+        varied("Matrix definiteness", index => {
+          const [D,E] = matrices(index);
+          const [A,B,C] = index ? symmetricPairs(index) : [[[2,-1],[-1,1]],[[-3,4],[4,-5]],[[-3,3],[3,-5]]];
+          const given = [A,B,C,D,E].map((rows,i) => matrix("ABCDE"[i],rows));
+          const answer = given.map(item => item.name + " is " + definiteness(item.rows)).join(". ") + ". Check the leading principal minors for your classification.";
+          return exercise("Matrix definiteness", "Classify the five matrices. Show the calculations that justify each classification.", given,
+            [part("Decide whether each matrix is positive definite, negative definite, or neither.",
+              "Compute the leading principal minors and look at their sign pattern.", answer)], ["A","B","C","D","E","det_A"]);
+        }),
+        fixed("Curvature of a production function", () => {
+          const h11 = "alpha*(alpha-1)*K^(alpha-2)*L^beta";
+          const h12 = "alpha*beta*K^(alpha-1)*L^(beta-1)";
+          const h22 = "beta*(beta-1)*K^alpha*L^(beta-2)";
+          return exercise("Curvature of a production function", "Inputs and exponents are positive, and {{alpha+beta<1}}.",
+            [formula("Y(K,L)=K^alpha*L^beta")], [
+              part("Derive the Hessian matrix.", "Differentiate twice in each direction and check the two cross derivatives.",
+                "Its upper-left, cross, and lower-right entries are " + joined([h11,h12,h22]) + ". The cross entries are equal.",
+                [mat([[h11,h12],[h12,h22]])]),
+              part("Is the production function strictly concave or strictly convex?", "Look at the sign of the first own derivative of the gradient and the sign of the Hessian determinant.",
+                "The leading Hessian entry is negative. The determinant is {{alpha*beta*(1-alpha-beta)*K^(2*alpha-2)*L^(2*beta-2)}}, which is positive. Therefore the Hessian is negative definite and the function strictly concave.")
+            ], ["K","L","Y","alpha","beta","H"]);
+        })
+      ]
+    },
+    {
+      number: 4, label: "Unconstrained Univariate Optimization", section: "§4.7",
+      exercises: [
+        fixed("Linear demand", () => profitExercise({
+          title:"Linear demand", intro:"A firm faces linear demand. The demand parameters and the cost parameter are positive.",
+          demand:"x=a-b*p", cost:"C(x)=k*x^2", inverse:"(a-x)/b", revenue:"x*(a-x)/b", marginal:"(a-2*x)/b",
+          profit:"x*(a-x)/b-k*x^2", foc:"(a-2*x)/b-2*k*x=0", optimum:"a/(2+2*b*k)", second:"-2/b-2*k",
+          symbols:["x","p","a","b","k","C","R","pi","x_star"]
+        })),
+        fixed("Constant-elasticity demand", () => profitExercise({
+          title:"Constant-elasticity demand", intro:"A firm faces constant-elasticity demand with {{A>0}}, {{sigma>1}}, and positive marginal cost {{w}}.",
+          demand:"x=A*p^(-sigma)", cost:"C(x)=w*x", inverse:"(A/x)^(1/sigma)", revenue:"A^(1/sigma)*x^(1-1/sigma)",
+          marginal:"(1-1/sigma)*A^(1/sigma)*x^(-1/sigma)", profit:"A^(1/sigma)*x^(1-1/sigma)-w*x",
+          foc:"(1-1/sigma)*A^(1/sigma)*x^(-1/sigma)-w=0", optimum:"A*((sigma-1)/(sigma*w))^sigma",
+          second:"-(1/sigma)*(1-1/sigma)*A^(1/sigma)*x^(-1/sigma-1)",
+          symbols:["x","p","A","sigma","w","C","R","pi","x_star"]
+        })),
+        varied("Cubic cost function", index => {
+          const t = index ? 3 + (index - 1) % 7 : 2;
+          const level = index ? 6 + index % 11 : 8;
+          const high = 3 * t;
+          const cost = "x^3 - " + 6 * t + "*x^2 + " + 9 * t ** 2 + "*x + " + level;
+          return exercise("Cubic cost function", "A firm chooses nonnegative output {{x}}.", [formula("C(x)=" + cost),formula("x>=0")],
+            [
+              part("Find the candidates for cost minimization.", "Find the interior roots of marginal cost and remember the boundary of the feasible set.",
+                "Marginal cost factors as {{3*(x-" + t + ")*(x-" + high + ")}}. The stationary outputs are " + joined([t,high]) + ", and the boundary candidate is {{0}}.",
+                [val(t),val(high),val(0)]),
+              part("Which candidates are associated with a cost minimum?", "Check curvature at the interior candidates and the one-sided behavior at zero.",
+                "The smaller stationary point is a local maximum. The larger is a local minimum. Zero is a one-sided local minimum on the feasible set."),
+              part("Determine whether the minimum is local or global.", "Compare the boundary with the interior minimum. Can you rewrite cost as a square times a nonnegative quantity?",
+                "{{C(x)=" + level + "+x*(x-" + high + ")^2}}. Both {{x=0}} and {{x=" + high + "}} attain the same global minimum, " + joined([level]) + ".")
+            ], ["x","C","x_star"]);
+        })
+      ]
+    },
+    {
+      number: 9, label: "Value Functions and the Envelope Theorem", section: "§9.5",
+      exercises: [
+        fixed("GDP maximization", () => exercise("GDP maximization",
+          "A competitive economy produces two goods using fixed capital and labor. The production possibility frontier describes the feasible output pairs.",
+          [formula("y_2=h(y_1,K,L)")],
+          [
+            part("Formulate GDP maximization and classify choice variables and parameters by where they enter.",
+              "The economy chooses outputs and values them at the given goods prices.",
+              "Maximize {{p_1*y_1+p_2*y_2}} over the outputs subject to the frontier. Prices enter the objective. Factor endowments enter the constraint. Both outputs are choices.",
+              [val("p_1*y_1+p_2*y_2"),eq("y_2=h(y_1,K,L)")]),
+            part("Explain the direct and indirect effects of a change in the price of good 1 on GDP. Use the Envelope Theorem if applicable.",
+              "Which term changes even if you momentarily keep the chosen output bundle fixed?",
+              "The direct effect is the selected quantity of good 1. The indirect effect comes from changing the output choices. At a differentiable optimum the first-order indirect effect vanishes, giving {{D(G,p_1)=y_1_star}}.",
+              [val("y_1_star",{alternatives:["y_1"]})]),
+            part("Use the first-order condition and the differentiated frontier to show why the indirect effect is zero.",
+              "Use the frontier to express the second output derivative in terms of the first.",
+              "The derivative of the frontier gives {{D(y_2,p_1)=D(h,y_1)*D(y_1,p_1)}}. The first-order condition gives {{p_1+p_2*D(h,y_1)=0}}. Factor the indirect effect using these two relations."),
+            part("Sketch maximized GDP against the price of good 1 and use the graph to explain the theorem.",
+              "A fixed output bundle gives a line in price–GDP space. Compare several such lines.",
+              "For a fixed output bundle the line has slope {{y_1}}. Maximized GDP is the upper envelope of attainable lines. At an interior differentiable point its slope equals the slope of the supporting line.")
+          ], ["y_1","y_2","y_1_star","p_1","p_2","K","L","h","G","lambda"])),
+      ]
+    },
+    {
+      number: 10, label: "Duality", section: "§10.5",
+      exercises: [
+        fixed("Primal consumer problem", () => {
+          const m = "(alpha+beta)";
+          const x = "alpha*I/(" + m + "*p_x)";
+          const y = "beta*I/(" + m + "*p_y)";
+          const V = "(alpha/p_x)^alpha*(beta/p_y)^beta*(I/" + m + ")^" + m;
+          const lambda = m + "/I*(" + V + ")";
+          return dualExercise("Primal consumer problem", [
+            part("Set up the primal problem.", "Which quantity is maximized, and what resource fixes the feasible bundles?",
+              "Maximize {{x^alpha*y^beta}} over the goods subject to {{p_x*x+p_y*y=I}}. Positive exponents make the budget bind.",
+              [val("x^alpha*y^beta"),eq("p_x*x+p_y*y=I")]),
+            {...part("Derive both Marshallian demands.", "Divide the two first-order conditions to obtain an optimal spending ratio.",
+              "The spending ratio is {{p_x*x/(p_y*y)=alpha/beta}}. Combine it with the budget to obtain {{x_m=" + x + "}} and {{y_m=" + y + "}}.",
+              [val(x),val(y)]), target:[formula("x_m=" + x),formula("y_m=" + y)]},
+            {...part("Derive the marginal utility of income.", "Substitute either demand into a first-order condition, or differentiate indirect utility with respect to income.",
+              "The primal multiplier equals {{lambda_m=" + lambda + "}}. Equivalently it is {{(alpha+beta)*V/I}}.",
+              [val(lambda,{alternatives:["(alpha+beta)*V/I"]})]),target:[formula("lambda_m=" + lambda)]},
+            part("Derive the indirect utility function.", "Substitute the two optimal quantities back into utility.",
+              "Indirect utility is {{V=" + V + "}}.", [val(V)])
+          ]);
+        }),
+        fixed("Dual consumer problem", () => {
+          const m = "(alpha+beta)";
+          const x = "U_star^(1/" + m + ")*(alpha*p_y/(beta*p_x))^(beta/" + m + ")";
+          const y = "U_star^(1/" + m + ")*(beta*p_x/(alpha*p_y))^(alpha/" + m + ")";
+          const P = m + "*(p_x/alpha)^(alpha/" + m + ")*(p_y/beta)^(beta/" + m + ")";
+          const E = "(" + P + ")*U_star^(1/" + m + ")";
+          const multiplier = "(p_x/alpha)^(alpha/" + m + ")*(p_y/beta)^(beta/" + m + ")*U_star^((1-" + m + ")/" + m + ")";
+          return dualExercise("Dual consumer problem", [
+            part("Set up the dual problem.", "Which target replaces the income constraint?",
+              "Minimize {{p_x*x+p_y*y}} subject to {{x^alpha*y^beta=U_star}}. Positive prices make the utility target bind.",
+              [val("p_x*x+p_y*y"),eq("x^alpha*y^beta=U_star")]),
+            {...part("Derive both Hicksian demands.", "Use the spending ratio with the utility target.",
+              "The demands are {{x_h=" + x + "}} and {{y_h=" + y + "}}.",
+              [val(x),val(y)]),target:[formula("x_h=" + x),formula("y_h=" + y)]},
+            {...part("Derive the multiplier on the utility target.", "Substitute an optimal bundle into a dual first-order condition.",
+              "With the target-minus-utility convention the multiplier equals the marginal cost of the utility target, {{mu_h=" + multiplier + "}}.",
+              [val(multiplier)]),target:[formula("mu_h=" + multiplier)]},
+            part("Derive the expenditure function.", "Evaluate spending at the Hicksian demands and factor the utility term.",
+              "Substituting both demands yields {{E=" + E + "}}.", [val(E)])
+          ]);
+        }),
+        fixed("Equivalence of the primal and dual solutions", () => dualExercise("Equivalence of the primal and dual solutions", [
+          part("Set the dual target equal to indirect utility at the primal solution. Show the two demand systems then agree.",
+            "Substitute indirect utility into the Hicksian demand formulas and collect powers of price and income.",
+            "When {{U_star=V}}, its {{1/(alpha+beta)}} power cancels the matching price powers in each Hicksian formula. This yields {{x_h=x_m}} and {{y_h=y_m}}."),
+          part("Show how the two Lagrange multipliers are related.",
+            "Write the two first-order conditions for the same good at the common bundle.",
+            "At the common bundle, marginal utility is {{lambda_m*p_x}} in the primal conditions and {{p_x/mu_h}} in the dual conditions. Therefore {{lambda_m=1/mu_h}}.",
+            [eq("lambda_m=1/mu_h")])
+        ])),
+        fixed("Price index", () => {
+          const m = "(alpha+beta)";
+          const simple = m + "*(p_x/alpha)^(alpha/" + m + ")*(p_y/beta)^(beta/" + m + ")";
+          const printed = "((alpha/beta)^(beta/" + m + ")+(beta/alpha)^(alpha/" + m + "))*p_x^(alpha/" + m + ")*p_y^(beta/" + m + ")";
+          return dualExercise("Price index", [
+            {...part("Use the expenditure function to derive the price index dual to utility.",
+              "Factor out the scale term that depends only on the utility target.",
+              "Factoring {{U_star^(1/(alpha+beta))}} from expenditure leaves {{P=" + printed + "}}.",
+              [val(simple,{alternatives:[printed]})]),target:[formula("P=" + printed)]}
+          ]);
+        })
+      ]
+    },
+    {
+      number: 11, label: "Further Applications", section: "§11.4",
+      exercises: [
+        fixed("Roy’s identity", () => exercise("Roy’s identity",
+          "A consumer chooses two goods. The two preference parameters, prices, and income are positive.",
+          [formula("V(p_x,p_y,I)=(alpha/p_x)^alpha*(beta/p_y)^beta*(I/(alpha+beta))^(alpha+beta)")],
+          [part("Use Roy’s identity to derive both Marshallian demands.",
+            "For each good, compare the price derivative of indirect utility with its income derivative.",
+            "The price derivative for x is {{-alpha*V/p_x}}. The income derivative is {{(alpha+beta)*V/I}}. Their negative ratio is {{alpha*I/((alpha+beta)*p_x)}}. The corresponding demand for y is {{beta*I/((alpha+beta)*p_y)}}.",
+            [val("alpha*I/((alpha+beta)*p_x)"),val("beta*I/((alpha+beta)*p_y)")])],
+          ["x","y","p_x","p_y","I","alpha","beta","V","x_m","y_m"])),
+        fixed("Income and substitution effects in a diagram", () => exercise("Income and substitution effects in a diagram",
+          "The price of good {{x}} falls. Analyze the effect on consumption of good {{y}}.", [],
+          [
+            part("Draw a diagram that decomposes the change in consumption of good y.",
+              "You need the original choice, the compensated choice, and the final choice.",
+              "Draw the original and new budget lines and the compensated line parallel to the new one and tangent to the original indifference curve. Mark all three choices and read the two changes from their y-coordinates."),
+            part("Explain whether the effects have opposite signs and which effect dominates in your diagram.",
+              "The substitution effect compares the original and compensated bundles. The income effect compares the compensated and final bundles.",
+              "In a standard two-good diagram with y normal, substitution toward the cheaper x lowers compensated y and the income effect raises y. The final y-coordinate relative to the initial one shows which is larger. With an inferior y the income effect may instead reinforce the substitution effect.")
+          ], ["x","y","p_x","p_y","I","x_m","y_m","x_h","y_h"])),
+        fixed("Income and substitution effects algebraically", () => {
+          const yM = "beta*I/((alpha+beta)*p_y)";
+          const yH = "(beta*p_x/(alpha*p_y))^(alpha/(alpha+beta))*U_star^(1/(alpha+beta))";
+          const term = "alpha*beta*I/((alpha+beta)^2*p_x*p_y)";
+          return exercise("Income and substitution effects algebraically",
+            "The consumer has Cobb–Douglas utility. Analyze how a change in the price of x affects consumption of y.",
+            [formula("u(x,y)=x^alpha*y^beta"),formula("y_m=" + yM),formula("y_h=" + yH)],
+            [
+              part("Use the demand functions and the Envelope Theorem to decompose the total price effect.",
+                "Differentiate compensated demand in the price of x at fixed utility. The expenditure derivative at the common bundle is consumption of x.",
+                "For an increase in the price of x, the substitution derivative at the common bundle is {{" + term + "}}. The income derivative term is its negative, {{-" + term + "}}.",
+                [val(term,{alternatives:["alpha*y_m/((alpha+beta)*p_x)"]}),val("-" + term,{alternatives:["-x_m*beta/((alpha+beta)*p_y)"]})]),
+              part("Which effect dominates?", "What does Marshallian demand for y tell you directly about the total price effect?",
+                "Marshallian demand for y is independent of the price of x. The two effects have equal magnitudes and cancel.",
+                [val("0")])
+            ], ["x","y","p_x","p_y","I","alpha","beta","U_star","x_m","y_m","y_h"]);
+        })
+      ]
+    }
+  ].sort((left,right) => left.number - right.number);
+
+  function matrices(index) {
+    if (!index) return [[[1,1,1],[1,4,2],[1,2,0]],[[1,0,1],[0,4,9],[1,9,6]]];
+    const a = 2 + index % 5;
+    const b = 3 + index % 6;
+    const c = 2 + index % 7;
+    return [[[a,1,0],[1,b,1],[0,1,c]],[[1,a,1],[a,1,0],[1,0,b]]];
+  }
+
+  function symmetricPairs(index) {
+    const a = 2 + index % 7;
+    const b = 3 + index % 5;
+    return [[[a,-1],[-1,b]],[[-a,a+b],[a+b,-b]],[[-a,1],[1,-b]]];
+  }
+
+  function definiteness(rows) {
+    const minors = rows.map((_, index) => determinant(rows.slice(0,index+1).map(row => row.slice(0,index+1))));
+    if (minors.every(value => value > 0)) return "positive definite";
+    if (minors.every((value,index) => value * (-1) ** (index+1) > 0)) return "negative definite";
+    return "neither positive nor negative definite";
+  }
+
+  function profitExercise(data) {
+    return exercise(data.title,data.intro,[formula(data.demand),formula(data.cost)], [
+      part("Set up inverse demand.", "Make price the dependent variable.", "Inverse demand is {{p=" + data.inverse + "}}.", [val(data.inverse)]),
+      part("Write revenue as a function of output.", "Each unit is sold at the price on inverse demand.", "Revenue is {{R=" + data.revenue + "}}.", [val(data.revenue)]),
+      part("Show that marginal revenue depends on output.", "Differentiate revenue with respect to the quantity chosen by the firm.",
+        "{{D(R,x)=" + data.marginal + "}}. It depends on output.", [val(data.marginal)]),
+      part("Set up profit maximization, derive the first-order condition, and solve for output.",
+        "Subtract cost from revenue, then set marginal profit to zero.",
+        "The objective is {{pi=" + data.profit + "}}. The condition is {{" + data.foc + "}}, giving {{x_star=" + data.optimum + "}}.",
+        [val(data.profit),eq(data.foc),val(data.optimum)]),
+      part("Use the second-order condition to show that the optimum is a profit maximum.",
+        "What is the sign of the second derivative under the given restrictions?",
+        "The second derivative is {{" + data.second + "}}, which is negative over positive output. This gives a profit maximum.",
+        [val(data.second)])
+    ],data.symbols);
+  }
+
+  function firmExercise(title, parts) {
+    return exercise(title,"A firm chooses capital and labor to meet the target {{Y_0}} at minimum cost. Factor prices are positive and {{0<alpha<1}}.",
+      [formula("C(K,L)=r*K+w*L"),formula("Y(K,L)=K^alpha*L^(1-alpha)"),formula("Y(K,L)=Y_0")],
+      parts,["K","L","K_star","L_star","Y","Y_0","r","w","alpha","lambda","Lagr","g","t","C","C_star"]);
+  }
+
+  function dualExercise(title, parts) {
+    return exercise(title,"A consumer has positive Cobb–Douglas exponents. Prices, income, and the target utility are positive wherever they enter.",
+      [formula("u(x,y)=x^alpha*y^beta")], parts,
+      ["x","y","p_x","p_y","I","U_star","alpha","beta","lambda","mu","lambda_m","mu_h","x_m","y_m","x_h","y_h","V","E","P"]);
+  }
+
+  const skills = [
+    {key:"differentiate",label:"Differentiate", drills:[
+      varied("A root with two inputs", index => {
+        const a = 2 + index % 6;
+        const b = 3 + (index * 3) % 7;
+        const expression = "sqrt(" + a + "*K+" + b + "*L)";
+        return drill("A root with two inputs","Compute the partial derivative with respect to labor.",["F=" + expression],
+          ["K","L","F"],"Hold capital fixed and apply the chain rule to the square root.",
+          [val(b + "/(2*" + expression + ")")], "The derivative is {{" + b + "/(2*" + expression + ")}}.");
+      }),
+      varied("Cobb–Douglas with fractional powers", index => {
+        const d = 3 + index % 7;
+        const expression = "K^(1/" + d + ")*L^(" + (d-1) + "/" + d + ")";
+        const answer = "(1/" + d + ")*K^(-" + (d-1) + "/" + d + ")*L^(" + (d-1) + "/" + d + ")";
+        return drill("Cobb–Douglas with fractional powers","Find the partial derivative with respect to capital.",["Y=" + expression],
+          ["K","L","Y"],"Only the capital power varies. Subtract one from its exponent.",
+          [val(answer)],"The derivative is {{" + answer + "}}.");
+      }),
+      varied("Reciprocal power", index => {
+        const a = 3 + index % 7;
+        const d = 2 + (index * 3) % 5;
+        const answer = "-" + a + "/" + d + "*x^(-" + (d+1) + "/" + d + ")";
+        return drill("Reciprocal power","Find the derivative with respect to x for positive x.",["f(x)=" + a + "/x^(1/" + d + ")"],
+          ["x","f"],"A power in the denominator can be written using a negative exponent.",
+          [val(answer)],"The derivative is {{" + answer + "}}.");
+      }),
+      varied("Logarithm of a linear expression", index => {
+        const a = 2 + index % 8;
+        const b = 1 + (index * 3) % 7;
+        const answer = a + "/(" + a + "*x+" + b + ")";
+        return drill("Logarithm of a linear expression","Find the derivative with respect to x on the domain of the function.",["f(x)=ln(" + a + "*x+" + b + ")"],
+          ["x","f"],"Multiply the derivative of the logarithm by the derivative of its argument.",
+          [val(answer)],"The derivative is {{" + answer + "}}.");
+      })
+    ]},
+    {key:"rearrange",label:"Rearrange", drills:[
+      varied("Inverse demand", index => {
+        const a = 11 + index % 15;
+        const b = 2 + (index * 3) % 7;
+        return drill("Inverse demand","Express price in terms of quantity.",["q=" + a + "-p/" + b],["q","p"],
+          "Collect the price term on one side, then remove its denominator.",
+          [val(b + "*(" + a + "-q)")],"Inverse demand is {{p=" + b + "*(" + a + "-q)}}.");
+      }),
+      varied("Isolate the multiplier", index => {
+        const d = 2 + index % 8;
+        return drill("Isolate the multiplier","Express the multiplier in terms of the other quantities.",["x-lambda/(" + d + "+r)=0"],["x","lambda","r"],
+          "Move the multiplier term across the equation and multiply by its original denominator.",
+          [val("x*(" + d + "+r)")],"The multiplier is {{lambda=x*(" + d + "+r)}}.");
+      }),
+      varied("Solve a production formula for labor", index => {
+        const a = 2 + index % 8;
+        const d = 2 + (index * 3) % 5;
+        const answer = "(Y/(" + a + "*K^(" + (d-1) + "/" + d + ")))^" + d;
+        return drill("Solve a production formula for labor","Isolate labor for positive output and capital.",
+          ["Y=" + a + "*K^(" + (d-1) + "/" + d + ")*L^(1/" + d + ")"],["Y","K","L"],
+          "Remove the factors independent of labor before undoing the fractional power.",
+          [val(answer)],"Labor equals {{L=" + answer + "}}.");
+      })
+    ]},
+    {key:"solve",label:"Solve", drills:[
+      varied("A pair of first-order conditions", index => {
+        const x = 2 + index % 8;
+        const y = 3 + (index * 3) % 9;
+        const c = 4 * x + 2 * y;
+        const d = x + 3 * y;
+        return drill("A pair of first-order conditions","Find both values. Use one equation line per final value.",
+          ["4*x+2*y=" + c,"x+3*y=" + d],["x","y"],
+          "You can isolate x in the second equation and substitute into the first.",
+          [val(x),val(y)],"The unique solution is {{x=" + x + "}} and {{y=" + y + "}}.");
+      }),
+      varied("Stationary points from a quadratic", index => {
+        const a = 1 + index % 7;
+        const b = a + 2 + (index * 3) % 6;
+        return drill("Stationary points from a quadratic","Find both real solutions. Enter each solution on its own line.",
+          ["x^2-" + (a+b) + "*x+" + (a*b) + "=0"],["x","x_1","x_2"],
+          "Look for two numbers whose product is the constant term and whose sum matches the linear coefficient with its sign reversed.",
+          [val(a),val(b)],"The roots are {{" + a + "}} and {{" + b + "}}.");
+      }),
+      varied("A root equation with a domain restriction", index => {
+        const a = 1 + index % 9;
+        const b = 2 + (index * 3) % 7;
+        return drill("A root equation with a domain restriction","Find the real solution and check that it satisfies the original equation.",
+          ["sqrt(x+" + a + ")=" + b],["x"],
+          "Square both sides, then substitute back into the original equation.",
+          [val(b*b-a)],"Squaring gives {{x=" + (b*b-a) + "}}. The radicand at that solution is {{"+(b*b)+"}}, so the original equation holds.");
+      })
+    ]}
+  ];
+
+  function drill(title,question,givens,symbols,hint,checks,answer) {
+    return exercise(title,"",givens.map(formula),[part(question,hint,answer,checks)],symbols);
+  }
+
+  return {chapters,skills};
+})();
+
+
+</script>
+  <script>
+"use strict";
+
+(() => {
+  const M = MathLab;
+  const {chapters,skills} = Course;
+  const root = document.getElementById("app");
+  const storageKey = "math-methods-lab/workbooks/v1";
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const icons = {
+    brand:'<path d="M4 19V5m0 14h16M7 16l4-6 3 3 5-7"/><circle cx="19" cy="6" r="1"/>',
+    skills:'<path d="m13 2-9 12h7l-1 8 10-12h-7z"/>',
+    refresh:'<path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.2 8a6.5 6.5 0 0 1 10.7-2L20 12M4 12l3.1 6A6.5 6.5 0 0 0 17.8 16"/>',
+    plus:'<path d="M12 5v14M5 12h14"/>',
+    equation:'<path d="M4 7h5M4 13h5m5-7 6 8m0-8-6 8M4 19h16"/>',
+    matrix:'<path d="M7 4H4v16h3m10-16h3v16h-3"/><path d="M9 8h1m4 0h1m-6 8h1m4 0h1"/>',
+    cases:'<path d="M8 4H7a2 2 0 0 0-2 2v3l-2 3 2 3v3a2 2 0 0 0 2 2h1M11 6h9m-9 6h9m-9 6h9"/>',
+    graph:'<path d="M4 4v16h16M7 16c5 0 5-8 12-8"/>',
+    note:'<path d="M5 4h14v16H5zM8 8h8m-8 4h8m-8 4h5"/>',
+    copy:'<rect x="8" y="8" width="11" height="12" rx="2"/><path d="M15 8V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h1"/>',
+    remove:'<path d="M4 7h16M9 7V4h6v3m-9 0 1 13h10l1-13M10 11v5m4-5v5"/>',
+    check:'<path d="m5 12 5 5L19 7"/>',
+    hint:'<path d="M9 18h6m-5 3h4m-6-6a6 6 0 1 1 8 0l-1 1H9z"/>'
+  };
+  const labels = {math:"Equation",matrix:"Matrix",case:"Cases",graph:"Graph",note:"Note"};
+  const chapterNavLabels = [
+    "Derivatives and Differentials", "Higher-Order Derivatives", "Concavity and Convexity",
+    "Univariate Optimization", "Multivariate Optimization", "Equality Constraints I",
+    "Equality Constraints II", "Inequality Constraints", "Value Functions and Envelope",
+    "Duality", "Further Applications"
+  ];
+  let storageAvailable = true;
+  let serial = 0;
+  let focus = null;
+  let active;
+  let keypadPage = "basic";
+  let message = null;
+  let state = readState();
+
+  function readState() {
+    const initial = {section:"c5",mode:"differentiate",choices:{},variants:{},attempts:{}};
+    try { return {...initial,...JSON.parse(localStorage.getItem(storageKey) || "{}")}; }
+    catch { storageAvailable = false; return initial; }
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(storageKey,JSON.stringify(state));
+      storageAvailable = true;
+    } catch { storageAvailable = false; }
+    const status = document.getElementById("storage-status");
+    if (status) status.textContent = storageAvailable ? "Saved on this device" : "Saved for this session";
+  }
+
+  function id() { return Date.now().toString(36) + "-" + (serial++).toString(36); }
+  function clone(value) { return JSON.parse(JSON.stringify(value)); }
+  function pad(value) { return String(value).padStart(2,"0"); }
+  function icon(name) {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">' + (icons[name] || "") + "</svg>";
+  }
+  function attrs(data = {}) {
+    return Object.entries(data).map(([key,value]) => ' data-' + key + '="' + M.escape(value) + '"').join("");
+  }
+  function button(action,text,options = {}) {
+    const {className="",iconName="",data={},disabled=false,title="",pressed} = options;
+    return '<button type="button" class="action ' + className + '"' + attrs({action,...data})
+      + (title ? ' title="' + M.escape(title) + '"' : "")
+      + (pressed === undefined ? "" : ' aria-pressed="' + pressed + '"')
+      + (disabled ? " disabled" : "") + ">" + (iconName ? icon(iconName) : "") + M.escape(text) + "</button>";
+  }
+
+  function iconButton(action,iconName,label,data={}) {
+    const escaped = M.escape(label);
+    return '<button type="button" class="icon-button"' + attrs({action,...data}) + ' title="' + escaped
+      + '" aria-label="' + escaped + '">' + icon(iconName) + "</button>";
+  }
+
+  function newCase() { return {id:id(),title:"",condition:[],result:[]}; }
+  function newBlock(kind) {
+    const base = {id:id(),kind,selected:false};
+    switch (kind) {
+      case "math": return {...base,expression:[]};
+      case "matrix": return {...base,rows:2,cols:2,cells:[[[],[]],[[],[]]]};
+      case "note": return {...base,text:""};
+      case "case": return {...base,cases:[newCase()]};
+      case "graph": return {...base,mode:"point",label:"",shapes:[],pending:[],plotSource:"",
+        xLabel:"x",yLabel:"y",xMin:0,xMax:10,yMin:0,yMax:10,snap:false,axesOpen:false};
+      default: throw Error("Unknown block type");
+    }
+  }
+
+  function activeExercise() {
+    if (state.section === "skills") {
+      const drillGroup = skills.find(group => group.key === state.mode);
+      const list = drillGroup?.drills || skills.flatMap(group => group.drills);
+      return {sectionKey:"s-" + state.mode,list,chapter:null};
+    }
+    const chapter = chapters.find(item => "c" + item.number === state.section) || chapters[0];
+    return {sectionKey:"c" + chapter.number,chapter,list:chapter.exercises};
+  }
+
+  function resolve() {
+    const context = activeExercise();
+    const {sectionKey,list,chapter} = context;
+    const exerciseIndex = Math.min(list.length-1,Math.max(0,state.choices[sectionKey] || 0));
+    const definition = list[exerciseIndex];
+    const baseKey = sectionKey + "-" + exerciseIndex;
+    const version = state.variants[baseKey] || 0;
+    const generated = definition.build(version);
+    const key = baseKey + "-" + version;
+    state.attempts[key] ||= {blocks:[newBlock("math")],part:0,passed:{},feedback:{}};
+    return {...context,baseKey,key,chapter,exerciseIndex,definition,version,generated,attempt:state.attempts[key]};
+  }
+
+  function navigation() {
+    const selected = state.section;
+    const brand = '<span class="brand-icon">' + icon("brand") + "</span>";
+    const options = chapters.map((chapter,index) => '<option value="c' + chapter.number + '"' + (selected === "c"+chapter.number ? " selected" : "")
+      + ">" + pad(chapter.number) + " · " + M.escape(chapterNavLabels[index]) + "</option>").join("");
+    const chapterButtons = chapters.map((chapter,index) => {
+      const key = "c" + chapter.number;
+      const current = selected === key;
+      return '<button type="button" class="nav-button' + (current ? " is-active" : "") + '"' + attrs({action:"navigate",section:key})
+        + (current ? ' aria-current="page"' : "") + ' title="' + M.escape(chapter.label) + '"><span class="nav-number">'
+        + pad(chapter.number) + "</span><span>" + M.escape(chapterNavLabels[index]) + "</span></button>";
+    }).join("");
+    return '<aside class="sidebar"><div class="brand">' + brand + '<div><div class="brand-name">Math Methods Lab</div>'
+      + '<p class="brand-context">Business and Economics</p></div></div><nav aria-label="Chapter tabs">'
+      + '<span class="nav-title">Chapters</span><div class="chapter-list">' + chapterButtons + "</div>"
+      + '<div class="skill-nav"><button type="button" class="nav-button nav-skill' + (selected === "skills" ? " is-active" : "")
+      + '" data-action="navigate" data-section="skills"' + (selected === "skills" ? ' aria-current="page"' : "") + '>'
+      + '<span class="nav-skill-icon">' + icon("skills") + "</span><span>Skills Practice</span></button></div></nav>"
+      + '<p class="sidebar-foot">University of Hohenheim · Course exercises</p></aside>'
+      + '<div class="mobile-nav"><div class="mobile-brand">' + brand + 'Math Methods Lab</div>'
+      + '<select data-change="mobile-nav" aria-label="Choose chapter or Skills Practice">' + options
+      + '<option value="skills"' + (selected === "skills" ? " selected" : "") + ">Skills Practice</option></select></div>";
+  }
+
+  function renderPage() {
+    active = resolve();
+    message = null;
+    const {chapter,definition,version,list,exerciseIndex} = active;
+    const heading = chapter ? chapter.label : "Skills Practice";
+    const subtitle = chapter ? "Chapter " + pad(chapter.number) : "Supplementary practice";
+    const categories = chapter ? "" : '<nav class="skill-categories" aria-label="Skills">'
+      + [...skills,{key:"mixed",label:"Mixed"}].map(group => exerciseChip("skill-mode",group.label,group.key,state.mode===group.key)).join("") + "</nav>";
+    const chips = list.length > 1
+      ? '<nav class="exercise-nav" aria-label="' + (chapter ? "Exercises" : "Drills") + '">'
+        + list.map((item,index) => exerciseChip("choose-exercise",item.title,index,index===exerciseIndex,chapter ? index+1 : "")).join("") + "</nav>"
+      : "";
+    const actions = version ? button("original","Original",{className:"action-quiet"}) : "";
+    const canRotate = definition.variants;
+    const rotateLabel = chapter ? "New variant" : (state.mode === "mixed" ? "New drill" : "New numbers");
+    root.innerHTML = '<div class="app-shell">' + navigation() + '<main class="main" id="main">'
+      + '<header class="chapter-header"><div><p class="eyebrow">' + M.escape(subtitle) + '</p><h1>' + M.escape(heading) + "</h1></div>"
+      + '<div class="header-actions">' + actions
+      + (canRotate ? button("variant",rotateLabel,{iconName:"refresh",className:"action-soft"}) : "") + "</div></header>"
+      + categories + chips + '<div class="work-grid"><section id="problem" class="card problem" aria-label="Exercise prompt"></section>'
+      + '<section class="card workspace" aria-label="Workspace"><div class="workspace-head"><h2>Workspace</h2><span class="workspace-status" id="storage-status"></span></div>'
+      + '<div class="workspace-tools" aria-label="Add to workspace">' + Object.entries(labels)
+        .map(([kind,label]) => button("add-block",label,{className:"action-small",iconName:kind==="math"?"equation":kind==="case"?"cases":kind,data:{kind},title:"Add "+label.toLowerCase()})).join("")
+      + '</div><div class="sheet" id="sheet"></div><div class="keypad" id="keypad"></div><div class="checking" id="checking"></div></section></div>'
+      + '<p class="help-strip">Select a subquestion to check it. To check specific lines, click their numbers in the workspace.</p></main></div>';
+    setDefaultFocus();
+    renderProblem();
+    renderSheet();
+    renderKeypad();
+    renderCheck();
+    save();
+  }
+
+  function exerciseChip(action,title,value,current,index="") {
+    return '<button type="button" class="exercise-chip' + (current ? " is-active" : "") + '" aria-pressed="' + current + '"'
+      + attrs({action,value}) + ">" + (index ? '<span class="chip-index">' + index + "</span>" : "") + M.escape(title) + "</button>";
+  }
+
+  function viewMatrix(rows) {
+    return '<span class="math-matrix"><table aria-label="Matrix"><tbody>' + rows.map(row =>
+      "<tr>" + row.map(cell => "<td>" + M.format(String(cell)) + "</td>").join("") + "</tr>").join("") + "</tbody></table></span>";
+  }
+
+  function displayGiven(given,index,copy=true) {
+    const rendered = given.rows ? '<span class="math">' + M.label(given.name) + " = " + viewMatrix(given.rows) + "</span>" : M.format(given.code);
+    return '<div class="given-line">' + rendered + (copy ? (given.rows
+      ? iconButton("insert-given","copy","Copy matrix to workspace",{index})
+      : iconButton("insert-given","copy","Copy formula to workspace",{index})) : "") + "</div>";
+  }
+
+  function renderProblem() {
+    const {chapter,generated,attempt,exerciseIndex,version} = active;
+    const heading = chapter ? "Exercise " + (exerciseIndex+1) : "Drill";
+    const status = version ? "Variant " + version : (chapter ? "Original" : "Practice");
+    const total = generated.parts.length;
+    const checked = Object.values(attempt.passed).filter(Boolean).length;
+    const givens = generated.givens.length ? '<div class="givens">' + generated.givens.map((given,index) => displayGiven(given,index)).join("") + "</div>" : "";
+    const parts = generated.parts.map((item,index) => {
+      const current = attempt.part === index;
+      const done = attempt.passed[index];
+      return '<div><button type="button" class="part-button' + (current?" is-active":"") + '" aria-pressed="' + current
+        + '"' + attrs({action:"choose-part",part:index}) + '><span class="part-letter' + (done?" checked":"") + '">'
+        + (done ? "✓" : alphabet[index]) + "</span><span>" + M.rich(item.question) + "</span></button>"
+        + (item.target ? '<details class="target"><summary>Show target from the sheet</summary><div class="givens">'
+          + item.target.map(given => displayGiven(given,0,false)).join("") + "</div></details>" : "") + "</div>";
+    }).join("");
+    document.getElementById("problem").innerHTML = '<div class="problem-kicker"><span>' + heading + '</span><span class="problem-version'
+      + (version ? " variant" : "") + '">' + status + "</span></div><h2>" + M.escape(generated.title) + "</h2>"
+      + (generated.intro ? '<p class="problem-description">' + M.rich(generated.intro) + "</p>" : "") + givens
+      + '<div class="parts-heading"><span>' + (total === 1 ? "Question" : "Subquestions") + '</span><span class="part-count">'
+      + checked + " of " + total + ' checked</span></div><div class="part-list">' + parts + "</div>"
+      + (chapter ? '<p class="source">Course exercises · ' + M.escape(chapter.section) + (version ? " · Practice values" : "") + "</p>" : "");
+  }
+
+  function blockById(value) { return active.attempt.blocks.find(block => block.id === value); }
+  function firstField(block) {
+    if (block.kind === "math") return "expression";
+    if (block.kind === "matrix") return "m:0:0";
+    if (block.kind === "case") return "c:" + block.cases[0].id + ":condition";
+    return null;
+  }
+
+  function rootSequence(block,field) {
+    if (!block) return null;
+    if (field === "expression") return block.expression;
+    const [type,a,b] = field.split(":");
+    if (type === "m") return block.cells?.[Number(a)]?.[Number(b)];
+    if (type === "c") return block.cases?.find(item => item.id === a)?.[b];
+    return null;
+  }
+
+  function sequenceAt(block,field,path) {
+    let seq = rootSequence(block,field);
+    for (let i=0; seq && i<path.length; i+=2) seq = seq[Number(path[i])]?.[path[i+1]];
+    return seq;
+  }
+
+  function setDefaultFocus() {
+    const block = active.attempt.blocks.find(item => firstField(item));
+    const field = block && firstField(block);
+    focus = field ? {block:block.id,field,path:[],offset:rootSequence(block,field).length} : null;
+  }
+
+  function setFocus(block,field,path=[],offset=null) {
+    const seq = sequenceAt(block,field,path);
+    if (!seq) return;
+    focus = {block:block.id,field,path,offset:Math.max(0,Math.min(seq.length,offset ?? seq.length))};
+  }
+
+  function nodeSlots(token) {
+    switch (token.kind) {
+      case "frac": return ["top","bottom"];
+      case "root": case "power": case "sub": case "group": return ["body"];
+      case "nthroot": return ["index","body"];
+      case "call": return Array.from({length:token.count},(_,i) => "arg"+i);
+      default: return [];
+    }
+  }
+
+  function sequenceMarkup(block,field,seq,path) {
+    const pathText = path.join(".");
+    const at = focus?.block === block.id && focus.field === field && focus.path.join(".") === pathText;
+    let html = "";
+    const caret = '<span class="caret" aria-hidden="true"></span>';
+    for (let i=0; i<=seq.length; i+=1) {
+      if (at && focus.offset === i) html += caret;
+      if (i<seq.length) html += '<span class="math-atom" data-atom="' + i + '">' + atomMarkup(seq[i],block,field,[...path,i]) + "</span>";
+    }
+    return '<span class="math-sequence' + (!path.length?" root-sequence":"") + (!seq.length?" is-empty":"")
+      + (at?" is-slot-active":"") + '"' + attrs({sequence:pathText,block:block.id,field}) + ">" + html + "</span>";
+  }
+
+  function atomMarkup(token,block,field,path) {
+    if (token.kind === "text") {
+      const value = token.value;
+      if (/^[A-Za-z][A-Za-z0-9_]*$/.test(value)) return M.label(value);
+      const op = M.visibleOps[value] || value;
+      return /^[=<>+*/-]+$/.test(value) || value in M.visibleOps ? '<span class="math-op">' + M.escape(op) + "</span>" : M.escape(op);
+    }
+    const slot = key => sequenceMarkup(block,field,token[key], [...path,key]);
+    switch (token.kind) {
+      case "frac": return M.fraction(slot("top"),slot("bottom"));
+      case "root": return M.radical(slot("body"));
+      case "nthroot": return M.radical(slot("body"),slot("index"));
+      case "power": return '<span class="sup-slot">' + slot("body") + "</span>";
+      case "sub": return '<span class="sub-slot">' + slot("body") + "</span>";
+      case "group": return "(" + slot("body") + ")";
+      case "call": {
+        const args = nodeSlots(token).map(slot);
+        switch(token.name) {
+          case "D": return M.fraction("∂" + args[0], "∂" + args[1]);
+          case "D2": return M.fraction("∂²" + args[0], "∂" + args[1] + " ∂" + args[2]);
+          case "diff": return M.fraction("d" + args[0], "d" + args[1]);
+          case "prime": return args[0] + "′(" + args[1] + ")";
+          case "abs": return "|" + args[0] + "|";
+          default: return M.escape(token.name) + "(" + args.join(", ") + ")";
+        }
+      }
+      default: return "";
+    }
+  }
+
+  function entry(block,field,label,placeholder="") {
+    const seq = rootSequence(block,field);
+    return '<div class="entry" tabindex="0" role="textbox" aria-label="' + M.escape(label) + '"' + attrs({entry:block.id,field}) + ">"
+      + (seq.length ? "" : '<span class="entry-placeholder">' + M.escape(placeholder) + "</span>")
+      + sequenceMarkup(block,field,seq,[]) + "</div>";
+  }
+
+  function blockIndex(block,index) {
+    return '<button type="button" class="block-index" aria-label="Select line ' + (index+1)
+      + ' for checking" aria-pressed="' + block.selected + '"' + attrs({action:"select-block",block:block.id}) + ">" + (index+1) + "</button>";
+  }
+
+  function blockControls(block,index) {
+    return '<div class="block-controls">' + iconButton("duplicate-block","copy","Duplicate line "+(index+1),{block:block.id})
+      + iconButton("remove-block","remove","Delete line "+(index+1),{block:block.id}) + "</div>";
+  }
+
+  function renderBlock(block,index) {
+    const appearance = (focus?.block === block.id ? " is-focused" : "") + (block.selected ? " is-selected" : "");
+    const content = block.kind === "math"
+      ? '<div class="block-line">' + blockIndex(block,index) + entry(block,"expression","Equation line "+(index+1),"Click a math key to start")
+        + blockControls(block,index) + "</div>"
+      : '<div class="block-heading">' + blockIndex(block,index) + "<strong>" + labels[block.kind] + "</strong>"
+        + blockControls(block,index) + '</div><div class="block-body">' + blockContent(block) + "</div>";
+    return '<section class="block' + appearance + '"' + attrs({"block-box":block.id}) + ">" + content + "</section>";
+  }
+
+  function blockContent(block) {
+    if (block.kind === "note") {
+      return '<textarea data-input="note"' + attrs({block:block.id}) + ' aria-label="Written reasoning" placeholder="Write your reasoning here">' + M.escape(block.text) + "</textarea>";
+    }
+    if (block.kind === "matrix") return matrixEditor(block);
+    if (block.kind === "case") return casesEditor(block);
+    return graphEditor(block);
+  }
+
+  function matrixEditor(block) {
+    const sizes = name => [1,2,3,4].map(size => '<option value="' + size + '"' + (block[name]===size ? " selected" : "") + ">" + size + "</option>").join("");
+    const select = (name,label) => "<label><span>" + label + '</span><select data-change="matrix-size"' + attrs({block:block.id,name}) + ">" + sizes(name) + "</select></label>";
+    const grid = block.cells.map((row,i) => "<tr>" + row.map((_,j) => "<td>" + entry(block,"m:"+i+":"+j,"Matrix row "+(i+1)+", column "+(j+1)) + "</td>").join("") + "</tr>").join("");
+    return '<div class="matrix-options">' + select("rows","Rows") + select("cols","Columns") + '</div><div class="matrix-scroll"><div class="math-matrix matrix-input"><table aria-label="Editable matrix"><tbody>'
+      + grid + "</tbody></table></div></div>";
+  }
+
+  function casesEditor(block) {
+    const rows = block.cases.map((item,index) => {
+      const fields = ["condition","result"].map(field => {
+        const label = field === "condition" ? "Conditions" : "Result";
+        return '<div class="case-field"><span>' + label + "</span>" + entry(block,"c:"+item.id+":"+field,"Case "+(index+1)+" "+label.toLowerCase()) + "</div>";
+      }).join("");
+      return '<div class="case-row"><div class="case-title"><input type="text" data-input="case-title"' + attrs({block:block.id,case:item.id})
+        + ' aria-label="Case name" placeholder="Case ' + (index+1) + '" value="' + M.escape(item.title) + '">'
+        + (block.cases.length > 1 ? iconButton("remove-case","remove","Delete case "+(index+1),{block:block.id,case:item.id}) : "")
+        + "</div>" + fields + "</div>";
+    }).join("");
+    return rows + button("add-case","Add case",{className:"action-small",iconName:"plus",data:{block:block.id}});
+  }
+
+  function bringFocus() {
+    if (!focus) return;
+    const element = Array.from(document.querySelectorAll("[data-entry]")).find(item => item.dataset.entry === focus.block && item.dataset.field === focus.field);
+    if (!element) return;
+    element.focus({preventScroll:true});
+    const caret = element.querySelector(".caret");
+    if (caret) {
+      const before = element.getBoundingClientRect();
+      const position = caret.getBoundingClientRect().left;
+      if (position > before.right - 12) element.scrollLeft += position - before.right + 19;
+      if (position < before.left) element.scrollLeft -= before.left - position + 12;
+    }
+  }
+
+  function renderSheet(restoreFocus=false) {
+    const sheet = document.getElementById("sheet");
+    sheet.innerHTML = active.attempt.blocks.map(renderBlock).join("");
+    if (restoreFocus) bringFocus();
+  }
+
+  function mathKey(value,visible,label,className="",action="insert-key") {
+    return '<button type="button" class="key '+className+'"' + attrs({action,value})
+      + ' aria-label="' + M.escape(label) + '" title="' + M.escape(label) + '">' + visible + "</button>";
+  }
+
+  function renderKeypad() {
+    const palette = document.getElementById("keypad");
+    const numberKeys = [..."1234567890","."].map(key => mathKey(key,M.escape(key),key==="."?"Decimal point":key)).join("");
+    const operations = [["+", "+", "Plus"],["-","−","Minus"],["*","×","Multiply"],["=","=","Equals"],
+      ["group","(□)","Parentheses"],["frac",'<span class="key-fraction"><span>□</span><span>□</span></span>',"Fraction"],
+      ["power","x<sup>□</sup>","Power"],["root","√□","Square root"]]
+      .map(([value,visible,label]) => mathKey(value,visible,label,"operator template")).join("");
+    const basicSymbols = [...new Set([...active.generated.symbols,"x","y"])].slice(0,24).map(symbol =>
+      mathKey(symbol,M.format(symbol),symbol.replace(/_/g," "),"symbol-key", "insert-symbol")).join("");
+    const more = [["<","&lt;","Less than"],[">","&gt;","Greater than"],["<=","≤","Less than or equal to"],
+      [">=","≥","Greater than or equal to"],["!=","≠","Not equal to"],["~=","≈","Approximately equal"],
+      [",",",","Comma"],["sub","x<sub>□</sub>","Subscript"],["nthroot","ⁿ√□","Nth root"],["ln","ln","Natural logarithm"],
+      ["exp","e<sup>□</sup>","Exponential function"],["abs","|□|","Absolute value"],["D","∂/∂","Partial derivative"],
+      ["D2","∂²/∂","Second partial derivative"],["diff","d/d","Ordinary derivative"],["prime","f′","Prime notation"]]
+      .map(([value,visible,label]) => mathKey(value,visible,label,"operator template")).join("");
+    const greeks = Object.entries(M.greek).filter(([key])=>key!=="Delta")
+      .map(([symbol,glyph]) => mathKey(symbol,glyph,symbol,"symbol-key","insert-symbol")).join("");
+    const letters = Array.from(keypadPage==="upper"?alphabet.toUpperCase():alphabet).map(symbol =>
+      mathKey(symbol,M.label(symbol),symbol,"symbol-key","insert-symbol")).join("");
+    const hasLetters = ["lower","upper"].includes(keypadPage);
+    const keyboardView = keypadPage==="basic" ? basicSymbols : hasLetters
+      ? mathKey(keypadPage==="upper"?"lower":"upper",keypadPage==="upper"?"Lowercase":"Uppercase",
+        keypadPage==="upper"?"Lowercase letters":"Uppercase letters","word","keypad-page") + letters : more + greeks;
+    const editing = [["next","Next slot"],["out","Exit slot"],["back","Delete symbol"]]
+      .map(([value,name]) => mathKey(value,M.escape(name),name,"word","slot-control")).join("");
+    palette.innerHTML = '<div class="keypad-head"><span class="keypad-title">Math keyboard</span><div class="keypad-tabs">'
+      + [["basic","Symbols"],["more","Notation"],["lower","Letters"]].map(([value,name]) => '<button type="button" class="keypad-tab" aria-pressed="'
+        + (keypadPage===value || (value==="lower"&&hasLetters)) + '"' + attrs({action:"keypad-page",value}) + ">" + name + "</button>").join("") + "</div></div>"
+      + '<div class="keys">' + numberKeys + operations + '</div><div class="keys">' + keyboardView
+      + '</div><div class="keys">' + editing + "</div>";
+  }
+
+  function markupMessage(feedback, part) {
+    if (!feedback) return "";
+    const className = feedback.kind === "correct" ? " good" : (feedback.kind === "retry" ? " try" : "");
+    let display = '<div class="feedback' + className + '" role="status"><p>' + M.escape(feedback.text) + "</p>";
+    if (feedback.hint) display += "<p>" + M.rich(part.hint) + "</p>";
+    if (feedback.solution) {
+      display += "<p>" + M.rich(part.answer) + "</p>";
+      if (!part.checks.length) display += button("mark-reviewed","Mark reviewed",{className:"action-small action-soft"});
+    }
+    return display + "</div>";
+  }
+
+  function renderCheck() {
+    const {attempt,generated} = active;
+    const part = generated.parts[attempt.part];
+    const selected = attempt.blocks.filter(block => block.selected).length;
+    const feedback = message || attempt.feedback[attempt.part];
+    document.getElementById("checking").innerHTML = '<div class="check-actions"><div class="check-context">'
+      + (generated.parts.length === 1 ? "Current question" : "Part (" + alphabet[attempt.part] + ")")
+      + (selected ? '<span class="selection-count">' + selected + ' line' + (selected===1?"":"s") + " selected</span>" : "")
+      + '</div><div class="check-buttons">' + button("hint","Hint",{className:"action-quiet",iconName:"hint"})
+      + button("solution","Solution",{className:"action-quiet"})
+      + button("check",part.checks.length ? "Check work" : "Review work",{className:"action-primary",iconName:"check"}) + "</div></div>"
+      + markupMessage(feedback,part);
+  }
+
+  function literal(value) { return {kind:"text",value:String(value)}; }
+  function call(name,count) {
+    return {kind:"call",name,count,...Object.fromEntries(Array.from({length:count},(_,i)=>["arg"+i,[]]))};
+  }
+
+  function tokensOf(node) {
+    if (node.type === "number") return [literal(node.value)];
+    if (node.type === "variable") return [literal(node.name)];
+    if (node.type === "group") return [{kind:"group",body:tokensOf(node.value)}];
+    if (node.type === "unary") return [literal(node.op),...tokensOf(node.right)];
+    if (node.type === "binary") {
+      if (node.op === "/") return [{kind:"frac",top:tokensOf(M.ungroup(node.left)),bottom:tokensOf(M.ungroup(node.right))}];
+      if (node.op === "^") return [...tokensOf(node.left),{kind:"power",body:tokensOf(M.ungroup(node.right))}];
+      return [...tokensOf(node.left),literal(node.op),...tokensOf(node.right)];
+    }
+    if (node.name === "sqrt") return [{kind:"root",body:tokensOf(node.args[0])}];
+    if (node.name === "root") return [{kind:"nthroot",index:tokensOf(node.args[1]),body:tokensOf(node.args[0])}];
+    const fn = call(node.name,node.args.length);
+    node.args.forEach((arg,i) => fn["arg"+i] = tokensOf(arg));
+    return [fn];
+  }
+
+  function codeOf(sequence) {
+    let result = "";
+    let previous = "";
+    for (const token of sequence) {
+      if (token.kind === "text") {
+        const value = token.value;
+        const numberChunk = /^[0-9.]+$/.test(value) && /^[0-9.]+$/.test(previous);
+        result += (numberChunk ? "" : " ") + value;
+        previous = value;
+        continue;
+      }
+      const body = name => codeOf(token[name]);
+      const grouped = name => "(" + body(name) + ")";
+      if (token.kind === "sub") {
+        result += "_" + body("body").replace(/\s/g,"");
+      } else if (token.kind === "group") {
+        result += " " + grouped("body");
+      } else if (token.kind === "frac") {
+        result += " (" + grouped("top") + "/" + grouped("bottom") + ")";
+      } else if (token.kind === "power") {
+        result += "^" + grouped("body");
+      } else if (token.kind === "root") {
+        result += " sqrt" + grouped("body");
+      } else if (token.kind === "nthroot") {
+        result += " root(" + body("body") + "," + body("index") + ")";
+      } else if (token.kind === "call") {
+        result += " " + token.name + "(" + nodeSlots(token).map(body).join(",") + ")";
+      }
+      previous = "";
+    }
+    return result.trim();
+  }
+
+  function ensureFocus() {
+    const block = blockById(focus?.block);
+    if (focus && sequenceAt(block,focus.field,focus.path)) return;
+    setDefaultFocus();
+    if (!focus) appendBlock("math");
+  }
+
+  function edit(work) {
+    ensureFocus();
+    work();
+    const part = active.attempt.part;
+    delete active.attempt.feedback[part];
+    const wasPassed = Boolean(active.attempt.passed[part]);
+    delete active.attempt.passed[part];
+    message = null;
+    save();
+    renderSheet(true);
+    if (wasPassed) renderProblem();
+    renderCheck();
+  }
+
+  function insert(atoms, enter=false) {
+    edit(() => {
+      const block = blockById(focus.block);
+      const {field,path,offset} = focus;
+      const seq = sequenceAt(block,field,path);
+      seq.splice(offset,0,...atoms);
+      const slots = atoms.length === 1 && enter ? nodeSlots(atoms[0]) : [];
+      if (slots.length) setFocus(block,field,[...path,offset,slots[0]],0);
+      else setFocus(block,field,path,offset+atoms.length);
+    });
+  }
+
+  function template(value) {
+    switch (value) {
+      case "frac": return {kind:"frac",top:[],bottom:[]};
+      case "root": case "power": case "sub": case "group": return {kind:value,body:[]};
+      case "nthroot": return {kind:"nthroot",index:[],body:[]};
+      case "D": case "prime": case "diff": return call(value,2);
+      case "D2": return call(value,3);
+      case "ln": case "abs": case "exp": return call(value,1);
+      default: return literal(value);
+    }
+  }
+
+  function appendBlock(kind) {
+    const block = newBlock(kind);
+    active.attempt.blocks.push(block);
+    const field = firstField(block);
+    if (field) setFocus(block,field);
+    return block;
+  }
+
+  function chooseEntry(entry, target, coordinate) {
+    const block = blockById(entry.dataset.entry);
+    const closest = target.closest("[data-sequence]") || entry.querySelector("[data-sequence]");
+    if (!closest || !block) return;
+    const field = closest.dataset.field;
+    const path = closest.dataset.sequence ? closest.dataset.sequence.split(".") : [];
+    const index = target.closest("[data-atom]");
+    const seq = sequenceAt(block,field,path);
+    if (!seq) return;
+    let offset = seq.length;
+    if (index && index.parentElement === closest) {
+      const rect = index.getBoundingClientRect();
+      offset = Number(index.dataset.atom) + (coordinate >= rect.left+rect.width/2 ? 1 : 0);
+    }
+    setFocus(block,field,path,offset);
+    renderSheet(true);
+  }
+
+  function jumpOut(block,field,path,after=true) {
+    if (!path.length) return false;
+    setFocus(block,field,path.slice(0,-2),Number(path.at(-2))+(after ? 1 : 0));
+    return true;
+  }
+
+  function moveSlot(direction) {
+    if (!focus) return;
+    const {block:idValue,field,path,offset} = focus;
+    const block = blockById(idValue);
+    const seq = sequenceAt(block,field,path);
+    if (direction === "out") {
+      jumpOut(block,field,path);
+    } else if (direction === "left" || direction === "right") {
+      const next = offset+(direction==="left"?-1:1);
+      if (next>=0 && next<=seq.length) setFocus(block,field,path,next);
+      else jumpOut(block,field,path,direction==="right");
+    } else if (!path.length) {
+      let index = seq.findIndex((token,i)=>i>=offset && nodeSlots(token).length);
+      if (index<0) index = seq.findIndex(token=>nodeSlots(token).length);
+      if (index>=0) setFocus(block,field,[index,nodeSlots(seq[index])[0]],0);
+      else if (block.kind==="matrix") {
+        const [,row,col] = field.split(":").map(Number);
+        const position = row*block.cols+col+1;
+        if (position<block.rows*block.cols) setFocus(block,"m:"+Math.floor(position/block.cols)+":"+position%block.cols);
+      } else if (block.kind==="case" && field.endsWith(":condition")) {
+        setFocus(block,field.replace(/condition$/,"result"));
+      }
+    } else {
+      const parent = path.slice(0,-2);
+      const index = Number(path.at(-2));
+      const slots = nodeSlots(sequenceAt(block,field,parent)[index]);
+      const nextSlot = slots[slots.indexOf(path.at(-1))+1];
+      if (nextSlot) setFocus(block,field,[...parent,index,nextSlot],0);
+      else jumpOut(block,field,path);
+    }
+    renderSheet(true);
+  }
+
+  function backspace() {
+    if (!focus) return;
+    const {block:idValue,field,path,offset} = focus;
+    const block = blockById(idValue);
+    if (!offset) {
+      if (jumpOut(block,field,path,false)) renderSheet(true);
+      return;
+    }
+    edit(() => {
+      sequenceAt(block,field,path).splice(offset-1,1);
+      setFocus(block,field,path,offset-1);
+    });
+  }
+
+  function insertGiven(given) {
+    if (!given) return;
+    if (given.rows) {
+      const block = appendBlock("matrix");
+      block.rows = given.rows.length;
+      block.cols = given.rows[0].length;
+      block.cells = given.rows.map(row => row.map(value => tokensOf(M.parse(String(value)))));
+      save();
+      renderSheet(true);
+      return;
+    }
+    try { insert(tokensOf(M.parse(given.code))); }
+    catch { setMessage("retry","This expression can be entered using the math keyboard."); }
+  }
+
+  function resizeMatrix(block) {
+    block.cells = Array.from({length:block.rows},(_,i) => Array.from({length:block.cols},(_,j) => block.cells[i]?.[j] || []));
+    if (focus?.block === block.id && !rootSequence(block,focus.field)) setFocus(block,"m:0:0");
+  }
+
+  function shapeExists(block) {
+    if (block.kind === "math") return block.expression.length > 0;
+    if (block.kind === "matrix") return block.cells.some(row=>row.some(cell=>cell.length));
+    if (block.kind === "case") return block.cases.some(item=>item.condition.length || item.result.length);
+    if (block.kind === "graph") return block.shapes.length > 0;
+    return block.text.trim().length > 0;
+  }
+
+  function answersOf(block) {
+    if (block.kind === "math") return [codeOf(block.expression)];
+    if (block.kind === "matrix") return [block.cells.map(row=>row.map(codeOf))];
+    if (block.kind === "case") return block.cases.flatMap(item=>[codeOf(item.condition),codeOf(item.result)]);
+    return [];
+  }
+
+  function setMessage(kind,text,extra={},keep=false) {
+    message = {kind,text,...extra};
+    if (keep) active.attempt.feedback[active.attempt.part] = message;
+    renderCheck();
+  }
+
+  function checkWork() {
+    const {attempt,generated} = active;
+    const part = generated.parts[attempt.part];
+    const selection = attempt.blocks.filter(block=>block.selected);
+    const work = (selection.length ? selection : attempt.blocks).filter(shapeExists);
+    if (!work.length) {
+      setMessage("retry",selection.length ? "Add work to your selected lines first." : "Add your work to the notebook before checking.");
+      return;
+    }
+    if (!part.checks.length) {
+      setMessage("review","Compare your reasoning with the following reference when you’re ready.",{solution:true});
+      return;
+    }
+    const answer = M.assess(work.flatMap(answersOf).filter(item=>item.length),part.checks,generated.assumptions);
+    if (answer.matches === answer.total) {
+      attempt.passed[attempt.part] = true;
+      setMessage("correct","Your formula work matches this part. Include any explanation or sketch the prompt asks for.",{},true);
+    } else {
+      delete attempt.passed[attempt.part];
+      setMessage("retry",answer.matches ? answer.matches + " of " + answer.total + " expected results matched. Use a separate line for each result."
+        : "The checker couldn’t match your work for this part. Select the relevant lines and check your notation.",{hint:true},true);
+    }
+    save();
+    renderProblem();
+  }
+
+  const board = {w:440,h:235,left:34,right:18,top:14,bottom:30};
+  const colors = ["#5747c5","#0c806c","#ab5425","#245fbc","#a23d72"];
+
+  function position(graph,x,y) {
+    const width = board.w-board.left-board.right;
+    const height = board.h-board.top-board.bottom;
+    return [board.left+width*(x-graph.xMin)/(graph.xMax-graph.xMin),board.top+height*(graph.yMax-y)/(graph.yMax-graph.yMin)];
+  }
+
+  function svgPoint(point) { return point.map(value=>Math.round(value*100)/100).join(" "); }
+  function displayNumber(value) { return Number(value.toFixed(2)); }
+  function svgLine(a,b,style) {
+    return '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" '+style+'/>';
+  }
+
+  function plotPath(graph,expression) {
+    let tree;
+    const horizontal = M.normalize(graph.xLabel) || "x";
+    const vertical = M.normalize(graph.yLabel) || "y";
+    try {
+      tree = M.ungroup(M.parse(expression));
+      if (M.relation(tree)) {
+        if (M.ungroup(tree.left).name === vertical) tree = tree.right;
+        else if (M.ungroup(tree.right).name === vertical) tree = tree.left;
+        else return "";
+      }
+    } catch { return ""; }
+
+    const steps = 96;
+    let path = "";
+    let previous = null;
+    for (let i=0;i<=steps;i+=1) {
+      const x = graph.xMin+(graph.xMax-graph.xMin)*i/steps;
+      const y = M.at(tree,{[horizontal]:x});
+      if (!Number.isFinite(y) || Math.abs(y-graph.yMin)>50*(graph.yMax-graph.yMin)) {
+        previous = null;
+        continue;
+      }
+      const point = position(graph,x,y);
+      const discontinuity = previous!==null && Math.abs(previous-y)>2*(graph.yMax-graph.yMin);
+      path += (previous===null || discontinuity ? "M" : "L") + svgPoint(point) + " ";
+      previous = y;
+    }
+    return path;
+  }
+
+  function renderShape(graph,shape,index) {
+    const color = colors[index%colors.length];
+    const points = shape.points?.map(point=>position(graph,point.x,point.y)) || [];
+    const coords = points.map(svgPoint);
+    const line = ' fill="none" stroke="'+color+'" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"';
+    let art = "";
+    switch (shape.kind) {
+      case "point": art = '<circle cx="'+points[0][0]+'" cy="'+points[0][1]+'" r="4.1" fill="'+color+'"/>'; break;
+      case "segment": art = '<path d="M'+coords[0]+' L'+coords[1]+'"'+line+'/>'; break;
+      case "curve": {
+        const [a,b,c] = points;
+        const control = [2*b[0]-(a[0]+c[0])/2,2*b[1]-(a[1]+c[1])/2];
+        art = '<path d="M'+coords[0]+' Q'+svgPoint(control)+' '+coords[2]+'"'+line+'/>';
+        break;
+      }
+      case "region": art = '<polygon points="'+coords.join(" ")+'" fill="'+color+'" fill-opacity=".17" stroke="'+color+'" stroke-width="1.4"/>'; break;
+      case "plot": art = '<path d="'+plotPath(graph,shape.expression)+'"'+line+'/>'; break;
+    }
+    if (shape.label && points.length) {
+      const [x,y] = points[shape.kind==="point" ? 0 : Math.floor(points.length/2)];
+      art += '<text class="graph-label" x="'+(x+7)+'" y="'+(y-6)+'">'+M.escape(shape.label)+'</text>';
+    }
+    return art;
+  }
+
+  function graphArt(graph) {
+    const zeroX = Math.max(graph.xMin,Math.min(0,graph.xMax));
+    const zeroY = Math.max(graph.yMin,Math.min(0,graph.yMax));
+    const [axisX,axisY] = position(graph,zeroX,zeroY);
+    let marks = "";
+    for (let i=0;i<=5;i+=1) {
+      const x = graph.xMin+(graph.xMax-graph.xMin)*i/5;
+      const y = graph.yMin+(graph.yMax-graph.yMin)*i/5;
+      marks += svgLine(position(graph,x,graph.yMin),position(graph,x,graph.yMax),'stroke="#e6eaf5"');
+      marks += svgLine(position(graph,graph.xMin,y),position(graph,graph.xMax,y),'stroke="#e6eaf5"');
+      marks += '<text text-anchor="middle" x="'+position(graph,x,0)[0]+'" y="'+(board.h-14)+'">'+displayNumber(x)+'</text>';
+      marks += '<text text-anchor="end" x="'+(board.left-5)+'" y="'+(position(graph,0,y)[1]+3)+'">'+displayNumber(y)+'</text>';
+    }
+    marks += svgLine([axisX,board.top],[axisX,board.h-board.bottom],'stroke="#8a98ba" stroke-width="1.35"');
+    marks += svgLine([board.left,axisY],[board.w-board.right,axisY],'stroke="#8a98ba" stroke-width="1.35"');
+    marks += '<text class="graph-label" x="'+(board.w-7)+'" y="'+(board.h-14)+'" text-anchor="end">'+M.escape(graph.xLabel)+'</text>';
+    marks += '<text class="graph-label" x="'+(axisX+6)+'" y="12">'+M.escape(graph.yLabel)+'</text>';
+    const clip = "clip-"+graph.id;
+    const draft = graph.pending.map(point=>{
+      const [x,y] = position(graph,point.x,point.y);
+      return '<circle cx="'+x+'" cy="'+y+'" r="3.3" fill="#6658d7"/>';
+    }).join("");
+    return '<svg class="graph-grid" role="img" aria-label="Graph. Choose a drawing tool and click to place points." viewBox="0 0 '+board.w+' '+board.h+'"'
+      +attrs({action:"graph-point",block:graph.id})+'><defs><clipPath id="'+clip+'"><rect x="'+board.left+'" y="'+board.top
+      +'" width="'+(board.w-board.left-board.right)+'" height="'+(board.h-board.top-board.bottom)+'"/></clipPath></defs>'
+      +marks+'<g clip-path="url(#'+clip+')">'+graph.shapes.map((shape,index)=>renderShape(graph,shape,index)).join("")+draft+'</g></svg>';
+  }
+
+  const drawingModes = {point:"Point",segment:"Line",curve:"Curve",region:"Region"};
+  const drawingHelp = {point:"Click once to place a point.",segment:"Click two points to draw a line segment.",
+    curve:"Click a start, midpoint, and end to draw a curve.",region:"Click at least three vertices, then close the region."};
+
+  function graphEditor(graph) {
+    const tools = Object.entries(drawingModes).map(([mode,label]) => button("graph-tool",label,{
+      className:"action-small"+(graph.mode===mode?" is-active":""),data:{block:graph.id,mode},pressed:graph.mode===mode
+    })).join("");
+    const input = (name,label,type="number") => '<label>'+label+'<input type="'+type+'" value="'+M.escape(graph[name])+'"'
+      + (type==="text"?' maxlength="12"':' step="any"') +attrs({change:"axis",block:graph.id,name})+'></label>';
+    const formulaLines = active.attempt.blocks.filter(block=>block.kind==="math"&&block.expression.length);
+    const plotOptions = formulaLines.map(block=>'<option value="'+block.id+'"'+(graph.plotSource===block.id?" selected":"")+'>Line '+(active.attempt.blocks.indexOf(block)+1)+'</option>').join("");
+    const plotControls = formulaLines.length
+      ? '<label><select aria-label="Formula line to plot" data-change="plot-source"'+attrs({block:graph.id})
+        +'><option value="">Equation</option>'+plotOptions+'</select></label>'+button("graph-plot","Plot",{className:"action-small",data:{block:graph.id}})
+      : "";
+    const axis = '<details class="graph-settings" data-graph-settings="'+graph.id+'"'+(graph.axesOpen?" open":"")+'><summary>Axes and scale</summary>'
+      +'<div class="axis-fields">'+input("xLabel","Horizontal","text")+input("xMin","Min x")+input("xMax","Max x")
+      +input("yLabel","Vertical","text")+input("yMin","Min y")+input("yMax","Max y")+'</div><div class="graph-footer">'
+      +'<label><input type="checkbox" data-change="axis"'+attrs({block:graph.id,name:"snap"})+(graph.snap?" checked":"")+' > Snap to integers</label></div></details>';
+    return '<div class="graph-tools">'+tools+button("graph-undo","Undo",{className:"action-small action-quiet",data:{block:graph.id},
+      disabled:!graph.pending.length&&!graph.shapes.length})+'</div>'+graphArt(graph)
+      +'<div class="graph-footer"><label>Label<input type="text" data-input="graph-label" maxlength="24" value="'+M.escape(graph.label)+'"'
+      +attrs({block:graph.id})+' aria-label="Label for the next drawing"></label>'+plotControls
+      +(graph.mode==="region" ? button("graph-close","Close region",{className:"action-small",data:{block:graph.id},disabled:graph.pending.length<3}) : "")
+      +'</div><p class="graph-hint">'+(graph.error?M.escape(graph.error):drawingHelp[graph.mode])+'</p>'+axis;
+  }
+
+  function addGraphShape(graph,kind,points) {
+    graph.shapes.push({kind,points,label:graph.label});
+    graph.label = "";
+    graph.pending = [];
+    graph.error = "";
+  }
+
+  function pointOnGraph(graph,event,svg) {
+    const screen = svg.getScreenCTM();
+    if (!screen) return;
+    const transformed = new DOMPoint(event.clientX,event.clientY).matrixTransform(screen.inverse());
+    const u = (transformed.x-board.left)/(board.w-board.left-board.right);
+    const v = (transformed.y-board.top)/(board.h-board.top-board.bottom);
+    if (u<0 || u>1 || v<0 || v>1) return;
+    const approximate = graph.snap ? Math.round : displayNumber;
+    const point = {x:approximate(graph.xMin+u*(graph.xMax-graph.xMin)),y:approximate(graph.yMax-v*(graph.yMax-graph.yMin))};
+    graph.pending.push(point);
+    const pointsNeeded = {point:1,segment:2,curve:3}[graph.mode];
+    if (graph.pending.length===pointsNeeded) addGraphShape(graph,graph.mode,graph.pending);
+    save();
+    renderSheet();
+  }
+
+  function chooseSection(section) {
+    state.section = section;
+    keypadPage = "basic";
+    renderPage();
+    window.scrollTo({top:0});
+  }
+
+  function handleClick(event) {
+    const control = event.target.closest("[data-action]");
+    if (!control) {
+      const entry = event.target.closest("[data-entry]");
+      if (entry) chooseEntry(entry,event.target,event.clientX);
+      return;
+    }
+    const {action,value,block:targetId,kind,mode} = control.dataset;
+    const block = blockById(targetId);
+    const attempt = active.attempt;
+    const part = active.generated.parts[attempt.part];
+    switch (action) {
+      case "navigate": chooseSection(control.dataset.section); return;
+      case "choose-exercise": state.choices[active.sectionKey] = Number(value); keypadPage = "basic"; renderPage(); return;
+      case "skill-mode": state.mode=value; keypadPage = "basic"; renderPage(); return;
+      case "original": state.variants[active.baseKey]=0; renderPage(); return;
+      case "variant": {
+        if (!active.chapter && state.mode==="mixed") {
+          const next = (active.exerciseIndex+1)%active.list.length;
+          state.choices[active.sectionKey] = next;
+          const nextKey = active.sectionKey+"-"+next;
+          state.variants[nextKey] = (state.variants[nextKey]||0)+1;
+        } else {
+          const latestKey = active.baseKey+"-last";
+          const next = Math.max(active.version,state.variants[latestKey]||0)+1;
+          state.variants[latestKey] = next;
+          state.variants[active.baseKey] = next;
+        }
+        renderPage();
+        return;
+      }
+      case "choose-part":
+        attempt.part = Number(control.dataset.part);
+        message = null;
+        save();
+        renderProblem();
+        renderCheck();
+        return;
+      case "insert-given": insertGiven(active.generated.givens[Number(control.dataset.index)]); return;
+      case "keypad-page": keypadPage = value; renderKeypad(); return;
+      case "insert-key": insert([template(value)],true); return;
+      case "insert-symbol": {
+        try { insert(tokensOf(M.parse(value))); } catch { insert([literal(value)]); }
+        return;
+      }
+      case "slot-control": if (value==="back") backspace(); else moveSlot(value); return;
+      case "check": checkWork(); return;
+      case "hint": setMessage("help","Hint",{hint:true}); return;
+      case "solution": setMessage("help","Reference solution",{solution:true}); return;
+      case "mark-reviewed":
+        attempt.passed[attempt.part] = true;
+        setMessage("correct","Marked reviewed.",{},true);
+        save();
+        renderProblem();
+        return;
+      case "add-block": {
+        const added = appendBlock(kind);
+        save();
+        renderSheet(Boolean(firstField(added)));
+        if (kind==="note") document.querySelector('textarea[data-block="'+added.id+'"]')?.focus();
+        document.querySelector('[data-block-box="'+added.id+'"]')?.scrollIntoView({block:"nearest"});
+        return;
+      }
+      case "duplicate-block": {
+        const copy = {...clone(block),id:id(),selected:false};
+        attempt.blocks.splice(attempt.blocks.indexOf(block)+1,0,copy);
+        const field = firstField(copy);
+        if (field) setFocus(copy,field);
+        break;
+      }
+      case "remove-block":
+        attempt.blocks.splice(attempt.blocks.indexOf(block),1);
+        if (!attempt.blocks.length) appendBlock("math");
+        if (focus?.block===block.id) setDefaultFocus();
+        break;
+      case "select-block":
+        block.selected = !block.selected;
+        message = null;
+        break;
+      case "add-case": {
+        const item = newCase();
+        block.cases.push(item);
+        setFocus(block,"c:"+item.id+":condition");
+        break;
+      }
+      case "remove-case":
+        block.cases = block.cases.filter(item=>item.id!==control.dataset.case);
+        if (focus?.block===block.id) setFocus(block,firstField(block));
+        break;
+      case "graph-tool":
+        block.mode = mode;
+        block.pending = [];
+        block.error = "";
+        break;
+      case "graph-undo":
+        if (block.pending.length) block.pending.pop(); else block.shapes.pop();
+        block.error = "";
+        break;
+      case "graph-close":
+        if (block.pending.length>=3) addGraphShape(block,"region",block.pending);
+        break;
+      case "graph-point": pointOnGraph(block,event,control); return;
+      case "graph-plot": {
+        const expression = blockById(block.plotSource)?.expression;
+        if (!expression || !plotPath(block,codeOf(expression))) {
+          block.error = "Choose a line containing the vertical variable as a function of the horizontal one. Use numeric parameters.";
+        } else {
+          block.shapes.push({kind:"plot",expression:codeOf(expression)});
+          block.error = "";
+        }
+        break;
+      }
+      default: return;
+    }
+    if (action==="remove-block" || action==="remove-case") {
+      delete attempt.feedback[attempt.part];
+      delete attempt.passed[attempt.part];
+      message = null;
+      renderProblem();
+    }
+    save();
+    renderSheet(Boolean(focus && ["duplicate-block","add-case"].includes(action)));
+    renderCheck();
+  }
+
+  function handleInput(event) {
+    const element = event.target;
+    const block = blockById(element.dataset.block);
+    if (!block) return;
+    switch (element.dataset.input) {
+      case "note": block.text = element.value; break;
+      case "case-title": block.cases.find(item=>item.id===element.dataset.case).title = element.value; break;
+      case "graph-label": block.label = element.value; break;
+      default: return;
+    }
+    save();
+  }
+
+  function handleChange(event) {
+    const element = event.target;
+    const block = blockById(element.dataset.block);
+    const name = element.dataset.name;
+    if (element.dataset.change==="mobile-nav") {
+      chooseSection(element.value);
+      return;
+    }
+    if (!block) return;
+    switch (element.dataset.change) {
+      case "matrix-size": block[name] = Number(element.value); resizeMatrix(block); break;
+      case "plot-source": block.plotSource = element.value; save(); return;
+      case "axis": {
+        const next = element.type==="number" ? Number(element.value) : element.type==="checkbox" ? element.checked : element.value;
+        if (element.type==="number") {
+          const axis = name[0];
+          const other = block[axis+(name.endsWith("Min")?"Max":"Min")];
+          if (!element.value || !Number.isFinite(next) || (name.endsWith("Min") ? next>=other : next<=other)) {
+            element.value = block[name];
+            return;
+          }
+        }
+        block[name] = next;
+        break;
+      }
+      default: return;
+    }
+    save();
+    renderSheet();
+  }
+
+  function handleKeys(event) {
+    const entry = event.target.closest("[data-entry]");
+    if (!entry || event.altKey || event.ctrlKey || event.metaKey) return;
+    const block = blockById(entry.dataset.entry);
+    if (!focus || focus.block!==block.id || focus.field!==entry.dataset.field) setFocus(block,entry.dataset.field);
+    const {key} = event;
+    const aliases = {"/":"frac","^":"power","_":"sub","(":"group"};
+    if (key==="Backspace") backspace();
+    else if (key==="ArrowLeft") moveSlot("left");
+    else if (key==="ArrowRight") moveSlot("right");
+    else if (key==="Escape" || key===")") moveSlot("out");
+    else if (key==="Tab" && !event.shiftKey && focus.path.length) moveSlot("next");
+    else if (key==="Enter") {
+      if (focus.path.length) moveSlot("next");
+      else if (block.kind==="math") { appendBlock("math"); save(); renderSheet(true); }
+      else moveSlot("next");
+    } else if (key in aliases) insert([template(aliases[key])],true);
+    else if (/^[a-zA-Z0-9.=+*<>,%-]$/.test(key) && key!=="%") insert([literal(key)]);
+    else return;
+    event.preventDefault();
+  }
+
+  root.addEventListener("click",handleClick);
+  root.addEventListener("input",handleInput);
+  root.addEventListener("change",handleChange);
+  root.addEventListener("keydown",handleKeys);
+  root.addEventListener("toggle",event=>{
+    const block = blockById(event.target.dataset.graphSettings);
+    if (block) block.axesOpen = event.target.open;
+  },true);
+
+  renderPage();
+})();
+
+</script>
+</body>
+</html>
